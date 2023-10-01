@@ -44,12 +44,14 @@
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
   home.packages = with pkgs; [
+    alacritty
+    firefox
     steam
   ];
 
   # Enable window manager
   xsession.windowManager.awesome.enable = true;
-
+  xdg.configFile."awesome/rc.lua".source = ../configs/awesome/rc.lua;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
