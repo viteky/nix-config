@@ -49,9 +49,12 @@
     steam
   ];
 
-  # Enable window manager
+  # Enable awesomewm
   xsession.windowManager.awesome.enable = true;
   xdg.configFile."awesome/rc.lua".source = ../configs/awesome/rc.lua;
+
+  # Enable i3wm
+  xsession.windowManager.i3.enable = true;
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

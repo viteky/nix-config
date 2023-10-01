@@ -78,15 +78,44 @@
     passwordAuthentication = false;
   };
 
-  # X-server
+  # Display/Window Manager
   services.xserver = {
     enable = true;
+    videoDrivers = ["nvidia"];
     displayManager = {
       lightdm.enable = true;
     };
     windowManager.awesome = {
       enable = true;
     };
+    windowManager.i3 = {
+      enable = true;
+      extraPackages = with pkgs; [
+        dmenu
+        i3status
+        i3lock
+      ];
+    };
+  };
+
+  # Programs
+  programs.dconf.enable = true;
+
+  # Enable OpenGL
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
+  # Nvidia settings
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+    open = true;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
