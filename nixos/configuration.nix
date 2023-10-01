@@ -58,7 +58,18 @@
   networking.hostName = "nixos";
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = false;
+      efiSysMountPoint = "/boot"; # ← use the same mount point here.
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+      device = "nodev";
+    };
+  };
 
   # Users
   users.users = {
@@ -67,7 +78,7 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = ["wheel" "networkManager" "libvirtd"];
+      extraGroups = ["wheel" "networkManager" "libvirtd" "audio"];
     };
   };
 
@@ -81,15 +92,26 @@
   # Display/Window Manager
   services.xserver = {
     enable = true;
-    videoDrivers = ["nvidia"];
+    videoDrivers = [ "nvidia" ];
     displayManager = {
-      lightdm.enable = true;
+      gdm.enable = true;
     };
+
+    desktopManager = {
+      xfce = {
+        enable = true;
+        noDesktop = true;
+        enableXfwm = false;
+      };
+    };
+
     windowManager.awesome = {
       enable = true;
     };
+
     windowManager.i3 = {
       enable = true;
+      package = pkgs.i3-gaps;
       extraPackages = with pkgs; [
         dmenu
         i3status
@@ -113,10 +135,19 @@
     modesetting.enable = true;
     powerManagement.enable = false;
     powerManagement.finegrained = false;
-    open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+
+  #Security
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = false;
+  };
+
+  # Audio
+  hardware.pulseaudio.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
