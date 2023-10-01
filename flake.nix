@@ -6,7 +6,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Hardware
@@ -20,6 +20,8 @@
     self,
     nixpkgs,
     home-manager,
+    hardware,
+    nix-colors,
     ...
   } @ inputs: let
     inherit (self) outputs;
