@@ -1,21 +1,30 @@
 # Imports
-from libqtile import bar, layout, widget
+import os
+import subprocess
+from libqtile import bar, layout, widget, extension, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from qtile_extras import widget
+from qtile_extras.widget.decorations import BorderDecoration
+import colors
 
 mod = "mod4"
-terminal = alacritty
+terminal = "alacritty"
+browser = "brave"
+
+#########################
+#       Keybindings     #
+#########################
 
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
+    Key(["mod1"], "Tab", lazy.spawn("rofi -show window "), desc="Open window switcher"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -52,10 +61,25 @@ keys = [
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+#########################
+#        Groups         #
+#########################
+
+
+groups = []
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+group_labels = ["WWW", "DEV", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX"]
+
+
+for i in range(len(group_names)):
+    groups.append(
+        Group(
+            name = group_names[i],
+            label = group_labels[i],
+        ))
 
 for i in groups:
     keys.extend(
@@ -81,20 +105,30 @@ for i in groups:
         ]
     )
 
+#########################
+#       Layouts         #
+#########################
+colors = colors.Nord
+
+layout_theme = {"border_width": 2,
+                "margin": 10,
+                "border_focus": "#ffffff",
+                "border_normal": "#ffffff"
+                }
+
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
+    layout.MonadTall(**layout_theme),
+    layout.Columns(**layout_theme),
+    layout.Max(**layout_theme),
+    layout.Stack(**layout_theme, num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Zoomy(**layout_theme),
 ]
 
 widget_defaults = dict(
@@ -104,38 +138,186 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
-            ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+#########################
+#        Widgets        #
+#########################
+def init_widgets_list():
+    widgets_list = [
+       # widget.Image(
+                # filename = "~/.config/qtile/icons/logo.png",
+                # scale = "False",
+                # mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
+                # ),
+        widget.Prompt(
+                 font = "Ubuntu Mono",
+                 fontsize=14,
+                 foreground = colors[1]
         ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
-    ),
-]
+        widget.GroupBox(
+                 fontsize = 11,
+                 margin_y = 3,
+                 margin_x = 4,
+                 padding_y = 2,
+                 padding_x = 3,
+                 borderwidth = 3,
+                 active = colors[8],
+                 inactive = colors[1],
+                 rounded = False,
+                 highlight_color = colors[2],
+                 highlight_method = "line",
+                 this_current_screen_border = colors[7],
+                 this_screen_border = colors [4],
+                 other_current_screen_border = colors[7],
+                 other_screen_border = colors[4],
+                 ),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
+        widget.CurrentLayoutIcon(
+                 custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+                 foreground = colors[1],
+                 padding = 0,
+                 scale = 0.7
+                 ),
+        widget.CurrentLayout(
+                 foreground = colors[1],
+                 padding = 5
+                 ),
+        widget.TextBox(
+                 text = '|',
+                 font = "Ubuntu Mono",
+                 foreground = colors[1],
+                 padding = 2,
+                 fontsize = 14
+                 ),
+        widget.WindowName(
+                 foreground = colors[6],
+                 max_chars = 40
+                 ),
+        widget.GenPollText(
+                 update_interval = 300,
+                 func = lambda: subprocess.check_output("printf $(uname -r)", shell=True, text=True),
+                 foreground = colors[3],
+                 fmt = '❤  {}',
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[3],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.CPU(
+                 format = '▓  Cpu: {load_percent}%',
+                 foreground = colors[4],
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[4],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.Memory(
+                 foreground = colors[8],
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e htop')},
+                 format = '{MemUsed: .0f}{mm}',
+                 fmt = '🖥  Mem: {} used',
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[8],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.DF(
+                 update_interval = 60,
+                 foreground = colors[5],
+                 #mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e df')},
+                 partition = '/',
+                 #format = '[{p}] {uf}{m} ({r:.0f}%)',
+                 format = '{uf}{m} free',
+                 fmt = '🖴  Disk: {}',
+                 visible_on_warn = False,
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[5],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.Volume(
+                 foreground = colors[7],
+                 fmt = '🕫  Vol: {}',
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[7],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.KeyboardLayout(
+                 foreground = colors[4],
+                 fmt = '⌨  Kbd: {}',
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[4],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.Clock(
+                 foreground = colors[8],
+                 format = "⏱  %a, %b %d - %H:%M",
+                 decorations=[
+                     BorderDecoration(
+                         colour = colors[8],
+                         border_width = [0, 0, 2, 0],
+                     )
+                 ],
+                 ),
+        widget.Spacer(length = 8),
+        widget.Systray(padding = 3),
+        widget.Spacer(length = 8),
+
+        ]
+    return widgets_list
+
+# Monitor 1 will display ALL widgets in widgets_list. It is important that this
+# is the only monitor that displays all widgets because the systray widget will
+# crash if you try to run multiple instances of it.
+def init_widgets_screen1():
+    widgets_screen1 = init_widgets_list()
+    return widgets_screen1 
+
+# All other monitors' bars will display everything but widgets 22 (systray) and 23 (spacer).
+def init_widgets_screen2():
+    widgets_screen2 = init_widgets_list()
+    del widgets_screen2[22:24]
+    return widgets_screen2
+
+# For adding transparency to your bar, add (background="#00000000") to the "Screen" line(s)
+# For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
+
+def init_screens():
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26))]
+
+if __name__ in ["config", "__main__"]:
+    screens = init_screens()
+    widgets_list = init_widgets_list()
+    widgets_screen1 = init_widgets_screen1()
+    widgets_screen2 = init_widgets_screen2()
+
 
 # Drag floating layouts.
 mouse = [
@@ -146,7 +328,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
@@ -172,6 +354,12 @@ auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
+
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
+
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the

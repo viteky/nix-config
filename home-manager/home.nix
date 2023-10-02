@@ -44,9 +44,11 @@
     firefox
     gh
     gimp
+    htop
     neofetch
     nitrogen
     obs-studio
+    rofi
     steam
     virt-manager
   ];
@@ -63,6 +65,12 @@
   programs.bash = {
     enable = true;
     enableCompletion = true;
+  };
+
+  # Symlink config files
+  home.file.".config" = {
+    source = ../.config;
+    recursive = true;
   };
 
   # Enable awesomewm

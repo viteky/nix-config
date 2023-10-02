@@ -77,7 +77,7 @@
     layout = "au";
     videoDrivers = [ "nvidia" ];
     displayManager = {
-      gdm.enable = true;
+      lightdm.enable = true;
     };
 
     desktopManager = {
@@ -161,8 +161,10 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
-  # Enable home-manager 
-  programs.home-manager.enable = true;
+  # System Packages
+  environment.systemPackages = with pkgs; [
+    home-manager
+  ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
