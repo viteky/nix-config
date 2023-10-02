@@ -67,10 +67,13 @@
 
   # Enable awesomewm
   xsession.windowManager.awesome.enable = true;
-  xdg.configFile."awesome/rc.lua".source = ../configs/awesome/rc.lua;
+  xdg.configFile."awesome/rc.lua".source = ../.config/awesome/rc.lua;
 
   # Enable i3wm
   xsession.windowManager.i3.enable = true;
+
+  # Enable qtile config
+  xdg.configFile."qtile/config.py".source = ../.config/qtile/config.py;
 
   # Enable home-manager
   programs.home-manager.enable = true;

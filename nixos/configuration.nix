@@ -9,8 +9,6 @@
   ...
 }: {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
-    # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
   ];
 
@@ -35,13 +33,6 @@
     settings = {
       experimental-features = "nix-command flakes";
       auto-optimise-store = true;
-    };
-  };
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      viteky = import ../home-manager/home.nix;
     };
   };
 
@@ -97,9 +88,12 @@
       };
     };
 
-    windowManager.awesome = {
+    windowManager.qtile = {
       enable = true;
+      extraPackages = p: with p; [ qtile-extras ];
     };
+ 
+    windowManager.awesome.enable = true;
 
     windowManager.i3 = {
       enable = true;
@@ -166,6 +160,9 @@
     LC_TELEPHONE = "en_AU.UTF-8";
     LC_TIME = "en_AU.UTF-8";
   };
+
+  # Enable home-manager 
+  programs.home-manager.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";

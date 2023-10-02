@@ -4,6 +4,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
@@ -19,6 +20,7 @@
   outputs = {
     self,
     nixpkgs,
+    nixpkgs-stable,
     home-manager,
     hardware,
     nix-colors,
@@ -56,8 +58,8 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
+      nixos = nixpkgs-stable.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};        
         modules = [
           # > Our main nixos configuration file <
           ./nixos/configuration.nix
