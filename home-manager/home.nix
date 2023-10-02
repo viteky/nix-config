@@ -47,10 +47,19 @@
     htop
     neofetch
     nitrogen
+    neovim
     obs-studio
     rofi
+    spice-protocol
+    spice
+    spice-gtk
+    spotify
     steam
     virt-manager
+    virt-viewer
+    vscode
+    win-virtio
+    win-spice
   ];
 
 
@@ -70,21 +79,27 @@
   # Symlink config files
   home.file.".config" = {
     source = ../.config;
+    executable = null;
     recursive = true;
   };
 
-  # Enable awesomewm
-  xsession.windowManager.awesome.enable = true;
-  xdg.configFile."awesome/rc.lua".source = ../.config/awesome/rc.lua;
-
-  # Enable i3wm
-  xsession.windowManager.i3.enable = true;
+  home.file.".config/qtile/autostart.sh" = {
+    source = ../.config/qtile/autostart.sh;
+    executable = true;
+  };
 
   # Enable qtile config
   xdg.configFile."qtile/config.py".source = ../.config/qtile/config.py;
 
   # Enable home-manager
   programs.home-manager.enable = true;
+
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
+  };
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

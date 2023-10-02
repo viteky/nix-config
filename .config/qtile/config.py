@@ -72,13 +72,14 @@ keys = [
 groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = ["WWW", "DEV", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX"]
-
+group_layouts = ["Max", "MonadTall", "MonadTall", "MonadTall", "Max", "MonadTall", "MonadTall", "MonadTall", "MonadTall"]
 
 for i in range(len(group_names)):
     groups.append(
         Group(
             name = group_names[i],
             label = group_labels[i],
+            layout = group_layouts[i].lower(),
         ))
 
 for i in groups:
@@ -143,11 +144,11 @@ extension_defaults = widget_defaults.copy()
 #########################
 def init_widgets_list():
     widgets_list = [
-       # widget.Image(
-                # filename = "~/.config/qtile/icons/logo.png",
-                # scale = "False",
-                # mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
-                # ),
+        widget.Image(
+                 filename = "~/.config/qtile/icons/logo.png",
+                 scale = "False",
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
+                 ),
         widget.Prompt(
                  font = "Ubuntu Mono",
                  fontsize=14,

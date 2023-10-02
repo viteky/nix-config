@@ -161,6 +161,18 @@
     LC_TIME = "en_AU.UTF-8";
   };
 
+  # Virtualisation
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      swtpm.enable = true;
+      ovmf.enable = true;
+      ovmf.packages = [ pkgs.OVMFFull.fd ];
+    };
+  };
+  virtualisation.spiceUSBRedirection.enable = true;
+  services.spice-vdagentd.enable = true; 
+
   # System Packages
   environment.systemPackages = with pkgs; [
     home-manager
