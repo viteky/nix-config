@@ -15,9 +15,6 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
   ];
 
   nixpkgs = {
@@ -76,21 +73,9 @@
     enableCompletion = true;
   };
 
-  # Symlink config files
-  home.file.".config" = {
-    source = ../.config;
-    executable = null;
-    recursive = true;
-  };
-
-  home.file.".config/qtile/autostart.sh" = {
-    source = ../.config/qtile/autostart.sh;
-    executable = true;
-  };
-
-  # Enable qtile config
-  xdg.configFile."qtile/config.py".source = ../.config/qtile/config.py;
-
+  xdg.configFile."qtile".source = ../.config/qtile;
+  xdg.configFile."alacritty".source = ../config/alacritty;
+  
   # Enable home-manager
   programs.home-manager.enable = true;
 
@@ -99,6 +84,14 @@
       autoconnect = ["qemu:///system"];
       uris = ["qemu:///system"];
     };
+  };
+
+  services.picom = {
+    enable = true;
+    activeOpacity = 1;
+    fade = true;
+    inactiveOpacity = 0.9;
+    menuOpacity = 1;
   };
 
   # Nicely reload system units when changing configs

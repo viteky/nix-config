@@ -310,7 +310,6 @@ def init_widgets_screen2():
 
 def init_screens():
     return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26)),
             Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26))]
 
 if __name__ in ["config", "__main__"]:
@@ -355,6 +354,7 @@ auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
+
 
 @hook.subscribe.startup_once
 def start_once():
