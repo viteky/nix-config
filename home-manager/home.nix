@@ -12,10 +12,10 @@
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
+    inputs.nix-colors.homeManagerModules.default
   ];
+  
+  colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
 
   nixpkgs = {
     overlays = [
@@ -45,6 +45,7 @@
     neofetch
     nitrogen
     neovim
+    lxappearance
     obs-studio
     rofi
     spice-protocol
@@ -92,6 +93,31 @@
     fade = true;
     inactiveOpacity = 0.9;
     menuOpacity = 1;
+  };
+
+  # Themes
+  gtk = {
+    enable = true;
+    cursorTheme.package = pkgs.bibata-cursors;
+    cursorTheme.name = "Bibata-Modern-Ice";
+    theme.package = pkgs.gruvbox-gtk-theme;
+    theme.name = "Gruvbox GTK Theme";
+    iconTheme.package = pkgs.gruvbox-dark-icons-gtk;
+    iconTheme.name = "gruvbox-dark-icons-gtk";
+  };
+
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "adwaita-dark";
+    style.package = pkgs.adwaita-qt;
+  };
+  
+  home.pointerCursor = {
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
   };
 
   # Nicely reload system units when changing configs
