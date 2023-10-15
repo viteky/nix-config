@@ -71,9 +71,6 @@
     enableCompletion = true;
   };
 
-  xdg.configFile."qtile".source = ../.config/qtile;
-  xdg.configFile."alacritty".source = ../.config/alacritty;
-
   # Enable home-manager
   programs.home-manager.enable = true;
 
