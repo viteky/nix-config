@@ -3,8 +3,8 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager.url = "github:nix-community/home-manager";
@@ -12,9 +12,6 @@
 
     # Hardware
     hardware.url = "github:nixos/nixos-hardware";
-
-    # Nix Colors
-    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = {
@@ -23,7 +20,6 @@
     nixpkgs-stable,
     home-manager,
     hardware,
-    nix-colors,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -58,11 +54,18 @@
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      nixos = nixpkgs-stable.lib.nixosSystem {
+      desktop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};        
         modules = [
           # > Our main nixos configuration file <
-          ./nixos/configuration.nix
+          ./hosts/desktop
+        ];
+      };
+      laptop = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};        
+        modules = [
+          # > Our main nixos configuration file <
+          ./hosts/laptop
         ];
       };
     };
@@ -70,12 +73,11 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "viteky@nixos" = home-manager.lib.homeManagerConfiguration {
+      "viteky@desktop" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
-          # > Our main home-manager configuration file <
-          ./home-manager/home.nix
+          ./home/viteky
         ];
       };
     };
