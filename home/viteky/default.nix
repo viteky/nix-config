@@ -52,6 +52,7 @@
     spice-gtk
     spotify
     steam
+    unzip
     virt-manager
     virt-viewer
     vscode
@@ -61,7 +62,6 @@
 
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-
   ];
 
 
@@ -126,6 +126,8 @@
     source = ./awesome;
     recursive = true;
   };
+  xsession.windowManager.awesome.enable = true;
+
 
   fonts.fontconfig.enable = true;
 

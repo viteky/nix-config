@@ -90,7 +90,12 @@
       lightdm.enable = true;
     };
  
-    windowManager.awesome.enable = true;
+    windowManager.awesome = {
+      enable = true;
+      luaModules = with pkgs.lua54Packages; [
+        luarocks-nix
+      ];
+    };
 
   };
 

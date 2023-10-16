@@ -19,6 +19,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 -- Tag management
 local charitable = require("charitable")
+-- Bling
+local bling = require("bling")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
