@@ -34,16 +34,18 @@
   };
 
   home.packages = with pkgs; [
+    autorandr
     brave
     firefox
     gh
     gimp
-    htop
+    btop
     neofetch
     nitrogen
     neovim
     lxappearance
     obs-studio
+    ranger
     rofi
     spice-protocol
     spice
@@ -55,6 +57,11 @@
     vscode
     win-virtio
     win-spice
+    xfce.thunar
+
+    # Fonts
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+
   ];
 
 
@@ -119,6 +126,8 @@
     source = ./awesome;
     recursive = true;
   };
+
+  fonts.fontconfig.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

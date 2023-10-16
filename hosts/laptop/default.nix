@@ -11,6 +11,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    ../common
   ];
 
   home-manager = {
@@ -88,14 +89,6 @@
     displayManager = {
       lightdm.enable = true;
     };
-
-    desktopManager = {
-      xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-      };
-    };
  
     windowManager.awesome.enable = true;
 
@@ -159,6 +152,12 @@
   virtualisation.spiceUSBRedirection.enable = true;
   services.spice-vdagentd.enable = true; 
 
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  services.blueman.enable = true;
   # System Packages
   environment.systemPackages = with pkgs; [
   ];
