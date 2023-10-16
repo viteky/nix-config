@@ -92,9 +92,6 @@
  
     windowManager.awesome = {
       enable = true;
-      luaModules = with pkgs.lua54Packages; [
-        luarocks-nix
-      ];
     };
 
   };

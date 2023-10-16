@@ -19,8 +19,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 -- Tag management
 local charitable = require("charitable")
--- Bling
-local bling = require("bling")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -50,6 +49,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 local theme = beautiful.init("~/.config/awesome/theme.lua")
+-- Bling
+--local bling = require("bling")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
