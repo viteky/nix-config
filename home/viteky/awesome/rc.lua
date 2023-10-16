@@ -51,7 +51,7 @@ local theme = beautiful.init("~/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "vim"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -59,8 +59,8 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.floating,
     awful.layout.suit.tile,
+    awful.layout.suit.floating,
     awful.layout.suit.max,
 }
 -- }}}
@@ -73,13 +73,17 @@ local taglist_buttons = gears.table.join(
 )
 
 local tags = charitable.create_tags(
-   { " 󰖟 ", "  ", " 󰇅 ", "  ", " 󰎆 " },
+   { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
    {
-      awful.layout.layouts[3],
-      awful.layout.layouts[2],
-      awful.layout.layouts[2],
-      awful.layout.layouts[3],
-      awful.layout.layouts[2],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
+      awful.layout.layouts[1],
    }
 )
 -- }}}
