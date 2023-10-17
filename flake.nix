@@ -60,14 +60,12 @@
       desktop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};        
         modules = [
-          # > Our main nixos configuration file <
           ./hosts/desktop
         ];
       };
       laptop = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};        
         modules = [
-          # > Our main nixos configuration file <
           ./hosts/laptop
         ];
       };

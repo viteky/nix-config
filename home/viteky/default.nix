@@ -126,8 +126,9 @@
     source = ./awesome;
     recursive = true;
   };
-  xsession.windowManager.awesome.enable = true;
-
+  xsession.windowManager.awesome = {
+    enable = true;
+  };
 
   fonts.fontconfig.enable = true;
 

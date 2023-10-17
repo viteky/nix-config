@@ -160,6 +160,14 @@
     powerOnBoot = true;
   };
   services.blueman.enable = true;
+
+  # Trackpad
+  services.xserver.libinput = {
+    enable = true;
+    touchpad.naturalScrolling = true;
+    touchpad.disableWhileTyping = true;
+  };
+
   # System Packages
   environment.systemPackages = with pkgs; [
   ];

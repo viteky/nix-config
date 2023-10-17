@@ -50,7 +50,7 @@ end
 -- Themes define colours, icons, font and wallpapers.
 local theme = beautiful.init("~/.config/awesome/theme.lua")
 -- Bling
---local bling = require("bling")
+local bling = require("bling")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
