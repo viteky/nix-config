@@ -11,7 +11,8 @@ import colors
 
 mod = "mod4"
 terminal = "alacritty"
-browser = "brave"
+browser = "firefox"
+editor = "nvim"
 
 #########################
 #       Keybindings     #
@@ -24,7 +25,7 @@ keys = [
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.layout.next(), desc="Move window focus to other window"),
-    Key(["mod1"], "Tab", lazy.spawn("rofi -show window "), desc="Open window switcher"),
+    Key(["mod1"], "Tab", lazy.spawn("rofi -show window -show-icons"), desc="Open window switcher"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
     Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
@@ -51,17 +52,12 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [mod],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
+    Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod],"f",lazy.window.toggle_fullscreen(),desc="Toggle fullscreen on the focused window",),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Spawn a command using a prompt widget"),
+    Key([mod], "r", lazy.spawn("rofi -show drun -show-icons"), desc="Spawn a command using a prompt widget"),
 ]
 
 #########################
@@ -71,7 +67,7 @@ keys = [
 
 groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_labels = ["WWW", "DEV", "SYS", "DOC", "VBOX", "CHAT", "MUS", "VID", "GFX"]
+group_labels = [" ", " ", "󰍹 ", "󰈙 ", " ", "󰭹 ", " ", "VID", "󰊗 "]
 group_layouts = ["Max", "MonadTall", "MonadTall", "MonadTall", "Max", "MonadTall", "MonadTall", "MonadTall", "MonadTall"]
 
 for i in range(len(group_names)):
@@ -111,10 +107,10 @@ for i in groups:
 #########################
 colors = colors.Nord
 
-layout_theme = {"border_width": 2,
+layout_theme = {"border_width": 3,
                 "margin": 10,
-                "border_focus": "#ffffff",
-                "border_normal": "#ffffff"
+                "border_focus": colors[8],
+                "border_normal": colors[7]
                 }
 
 layouts = [
@@ -129,33 +125,36 @@ layouts = [
     # layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
-    layout.Zoomy(**layout_theme),
+    # layout.Zoomy(**layout_theme),
 ]
 
-widget_defaults = dict(
-    font="sans",
-    fontsize=12,
-    padding=3,
-)
-extension_defaults = widget_defaults.copy()
 
 #########################
 #        Widgets        #
 #########################
+
+widget_defaults = dict(
+    font="JetBrainsMono Nerd Font",
+    fontsize=16,
+    padding=3,
+)
+extension_defaults = widget_defaults.copy()
+
 def init_widgets_list():
     widgets_list = [
-        widget.Image(
-                 filename = "~/.config/qtile/icons/logo.png",
-                 scale = "False",
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm)},
+        widget.TextBox(
+                 text = '  ',
+                 fontsize = 30,
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show drun -show-icons")},
                  ),
         widget.Prompt(
-                 font = "Ubuntu Mono",
+                 font = "JetBrainsMono Nerd Font",
                  fontsize=14,
                  foreground = colors[1]
         ),
         widget.GroupBox(
-                 fontsize = 11,
+                 font = "JetBrainsMono Nerd Font",
+                 fontsize = 20,
                  margin_y = 3,
                  margin_x = 4,
                  padding_y = 2,
@@ -165,7 +164,7 @@ def init_widgets_list():
                  inactive = colors[1],
                  rounded = False,
                  highlight_color = colors[2],
-                 highlight_method = "line",
+                 highlight_method = "text",
                  this_current_screen_border = colors[7],
                  this_screen_border = colors [4],
                  other_current_screen_border = colors[7],
@@ -173,7 +172,7 @@ def init_widgets_list():
                  ),
         widget.TextBox(
                  text = '|',
-                 font = "Ubuntu Mono",
+                 font = "JetBrainsMono Nerd Font",
                  foreground = colors[1],
                  padding = 2,
                  fontsize = 14
@@ -184,13 +183,9 @@ def init_widgets_list():
                  padding = 0,
                  scale = 0.7
                  ),
-        widget.CurrentLayout(
-                 foreground = colors[1],
-                 padding = 5
-                 ),
         widget.TextBox(
                  text = '|',
-                 font = "Ubuntu Mono",
+                 font = "JetBrainsMono Nerd Font",
                  foreground = colors[1],
                  padding = 2,
                  fontsize = 14
@@ -199,21 +194,9 @@ def init_widgets_list():
                  foreground = colors[6],
                  max_chars = 40
                  ),
-        widget.GenPollText(
-                 update_interval = 300,
-                 func = lambda: subprocess.check_output("printf $(uname -r)", shell=True, text=True),
-                 foreground = colors[3],
-                 fmt = '❤  {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[3],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
         widget.Spacer(length = 8),
         widget.CPU(
-                 format = '▓  Cpu: {load_percent}%',
+                 format = '  {load_percent}%',
                  foreground = colors[4],
                  decorations=[
                      BorderDecoration(
@@ -225,9 +208,9 @@ def init_widgets_list():
         widget.Spacer(length = 8),
         widget.Memory(
                  foreground = colors[8],
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e htop')},
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
                  format = '{MemUsed: .0f}{mm}',
-                 fmt = '🖥  Mem: {} used',
+                 fmt = '󱡶 {}',
                  decorations=[
                      BorderDecoration(
                          colour = colors[8],
@@ -243,7 +226,7 @@ def init_widgets_list():
                  partition = '/',
                  #format = '[{p}] {uf}{m} ({r:.0f}%)',
                  format = '{uf}{m} free',
-                 fmt = '🖴  Disk: {}',
+                 fmt = '󰋊 {}',
                  visible_on_warn = False,
                  decorations=[
                      BorderDecoration(
@@ -255,7 +238,7 @@ def init_widgets_list():
         widget.Spacer(length = 8),
         widget.Volume(
                  foreground = colors[7],
-                 fmt = '🕫  Vol: {}',
+                 fmt = ' {}',
                  decorations=[
                      BorderDecoration(
                          colour = colors[7],
@@ -264,20 +247,9 @@ def init_widgets_list():
                  ],
                  ),
         widget.Spacer(length = 8),
-        widget.KeyboardLayout(
-                 foreground = colors[4],
-                 fmt = '⌨  Kbd: {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[4],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
-        widget.Spacer(length = 8),
         widget.Clock(
                  foreground = colors[8],
-                 format = "⏱  %a, %b %d - %H:%M",
+                 format = "%a, %b %d - %H:%M",
                  decorations=[
                      BorderDecoration(
                          colour = colors[8],
@@ -288,7 +260,6 @@ def init_widgets_list():
         widget.Spacer(length = 8),
         widget.Systray(padding = 3),
         widget.Spacer(length = 8),
-
         ]
     return widgets_list
 
@@ -309,8 +280,10 @@ def init_widgets_screen2():
 # For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26))]
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=40, background="#00000000")),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40)),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40))
+           ]
 
 if __name__ in ["config", "__main__"]:
     screens = init_screens()
@@ -328,8 +301,8 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
-bring_front_click = False
+follow_mouse_focus = False
+bring_front_click = True
 floats_kept_above = True
 cursor_warp = False
 floating_layout = layout.Floating(

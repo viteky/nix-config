@@ -11,7 +11,6 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
-    ../common
   ];
 
   home-manager = {
@@ -71,10 +70,12 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = ["wheel" "networkManager" "libvirtd" "audio"];
+      extraGroups = ["wheel" "networkManager" "libvirtd" "audio" "video"];
     };
   };
-
+  
+  programs.light.enable = true;
+  
   # SSH
   services.openssh = {
     enable = true;
@@ -87,15 +88,21 @@
     enable = true;
     layout = "au";
     displayManager = {
-      lightdm.enable = true;
+      gdm.enable = true;
     };
  
     windowManager.awesome = {
       enable = true;
     };
-
+    windowManager.qtile = {
+      enable = true;
+      extraPackages = python3Packages: with python3Packages; [
+          qtile-extras
+        ];
+      
+    };
   };
-
+  
   # Programs
   programs.dconf.enable = true;
 
@@ -168,10 +175,17 @@
     touchpad.disableWhileTyping = true;
   };
 
+  # Keyring
+  services.gnome.gnome-keyring.enable = true;
+  
   # System Packages
   environment.systemPackages = with pkgs; [
   ];
-
+  
+  fonts.packages = with pkgs; [
+    font-awesome
+  ];
+  
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }

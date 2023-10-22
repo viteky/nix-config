@@ -13,6 +13,7 @@
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
     ./alacritty
+    ./sway.nix
   ];
   
   nixpkgs = {
@@ -35,10 +36,10 @@
 
   home.packages = with pkgs; [
     autorandr
-    brave
     firefox
     gh
     gimp
+    gnome.seahorse
     btop
     neofetch
     nitrogen
@@ -46,7 +47,13 @@
     lxappearance
     obs-studio
     ranger
+
+    # Rofi
     rofi
+    rofi-power-menu
+    rofi-screenshot
+    rofi-bluetooth
+    
     spice-protocol
     spice
     spice-gtk
@@ -55,13 +62,13 @@
     unzip
     virt-manager
     virt-viewer
-    vscode
     win-virtio
     win-spice
     xfce.thunar
 
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    font-awesome
   ];
 
 
@@ -132,9 +139,30 @@
 
   fonts.fontconfig.enable = true;
 
+  programs.vscode = {
+  enable = true;
+  package = pkgs.vscode.fhs;
+  };
+  
+
+  programs.waybar = {
+    enable = true;
+  };
+  xdg.configFile.waybar = {
+    source = ./waybar;
+    recursive = true;
+  };
+
+  xdg.configFile.qtile = {
+    source = ./qtile;
+    recursive = true;
+  };
+  
+  services.swayosd.enable = true;
+
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-
+  
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.05";
 }

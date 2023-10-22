@@ -15,6 +15,9 @@
 
     # Nix Colors
     nix-colors.url = "github:misterio77/nix-colors";
+
+    # Waybar
+    waybar.url = "github:Alexays/Waybar";
   };
 
   outputs = {
@@ -23,6 +26,7 @@
     nixpkgs-stable,
     home-manager,
     hardware,
+    waybar,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -38,20 +42,10 @@
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
-    # Your custom packages
-    # Acessible through 'nix build', 'nix shell', etc
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
-    # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
     nixosModules = import ./modules/nixos;
-    # Reusable home-manager modules you might want to export
-    # These are usually stuff you would upstream into home-manager
     homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
@@ -81,6 +75,18 @@
         modules = [
           # > Our main home-manager configuration file <
           ./home/viteky
+        ];
+      };
+    };
+    homeConfigurations = {
+      "viteky@laptop" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          # > Our main home-manager configuration file <
+          ./home/viteky
+          waybar.homeManagerModules.default
+          {programs.waybar.enable = true;}
         ];
       };
     };
