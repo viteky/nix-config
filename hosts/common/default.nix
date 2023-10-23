@@ -52,12 +52,10 @@
       efiSupport = true;
       efiInstallAsRemovable = true;
       device = "nodev";
+      theme = pkgs.nixos-grub2-theme;
     };
   };
   boot.supportedFilesystems = [ "ntfs" ];
-  boot.plymouth.enable = true;
-  boot.plymouth.theme = "nixos-bgrt";
-  boot.plymouth.themePackages = [pkgs.nixos-bgrt-plymouth];
 
   # Users
   users.users = {
