@@ -108,7 +108,7 @@
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Ice";
     theme.package = pkgs.nordic;
-    theme.name = "Nordic-darker";
+    theme.name = "Nordic";
     iconTheme.package = pkgs.nordzy-icon-theme;
     iconTheme.name = "Nordzy-dark";
   };
@@ -117,7 +117,7 @@
   qt = {
     enable = true;
     platformTheme = "gtk";
-    style.name = "Nordic-darker";
+    style.name = "Nordic";
     style.package = pkgs.nordic;
   };
   
