@@ -61,6 +61,10 @@
       device = "nodev";
     };
   };
+  boot.supportedFilesystems = [ "ntfs" ];
+  boot.plymouth.enable = true;
+  boot.plymouth.theme = "nixos-bgrt";
+  boot.plymouth.themePackages = [pkgs.nixos-bgrt-plymouth];
 
   # Users
   users.users = {
@@ -69,7 +73,7 @@
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-      extraGroups = ["wheel" "networkManager" "libvirtd" "audio"];
+      extraGroups = ["wheel" "networkManager" "libvirtd" "audio" "video" "storage"];
     };
   };
 
@@ -88,17 +92,12 @@
     displayManager = {
       lightdm.enable = true;
     };
-
-    desktopManager = {
-      xfce = {
-        enable = true;
-        noDesktop = true;
-        enableXfwm = false;
-      };
+    windowManager.qtile = {
+      enable = true;
+      extraPackages = python3Packages: with python3Packages; [
+          qtile-extras
+        ];    
     };
- 
-    windowManager.awesome.enable = true;
-
   };
 
   # Programs
@@ -168,8 +167,16 @@
   virtualisation.spiceUSBRedirection.enable = true;
   services.spice-vdagentd.enable = true; 
 
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.tumbler.enable = true;
+
   # System Packages
   environment.systemPackages = with pkgs; [
+    ntfs3g
+    exfat
+
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

@@ -47,7 +47,8 @@
     lxappearance
     obs-studio
     ranger
-
+    lutris
+    
     # Rofi
     rofi
     rofi-power-menu
@@ -60,6 +61,7 @@
     spotify
     steam
     unzip
+    ueberzug
     virt-manager
     virt-viewer
     win-virtio
@@ -97,10 +99,7 @@
 
   services.picom = {
     enable = true;
-    activeOpacity = 1;
-    fade = true;
-    inactiveOpacity = 0.9;
-    menuOpacity = 1;
+    package = pkgs.picom-next;
   };
 
   # Themes
@@ -108,18 +107,18 @@
     enable = true;
     cursorTheme.package = pkgs.bibata-cursors;
     cursorTheme.name = "Bibata-Modern-Ice";
-    theme.package = pkgs.gruvbox-gtk-theme;
-    theme.name = "Gruvbox GTK Theme";
-    iconTheme.package = pkgs.gruvbox-dark-icons-gtk;
-    iconTheme.name = "gruvbox-dark-icons-gtk";
+    theme.package = pkgs.nordic;
+    theme.name = "Nordic-darker";
+    iconTheme.package = pkgs.nordzy-icon-theme;
+    iconTheme.name = "Nordzy-dark";
   };
 
 
   qt = {
     enable = true;
     platformTheme = "gtk";
-    style.name = "adwaita-dark";
-    style.package = pkgs.adwaita-qt;
+    style.name = "Nordic-darker";
+    style.package = pkgs.nordic;
   };
   
   home.pointerCursor = {
@@ -128,29 +127,11 @@
     name = "Bibata-Modern-Ice";
   };
 
-  # Awesome 
-  xdg.configFile.awesome = {
-    source = ./awesome;
-    recursive = true;
-  };
-  xsession.windowManager.awesome = {
-    enable = true;
-  };
-
   fonts.fontconfig.enable = true;
 
   programs.vscode = {
   enable = true;
   package = pkgs.vscode.fhs;
-  };
-  
-
-  programs.waybar = {
-    enable = true;
-  };
-  xdg.configFile.waybar = {
-    source = ./waybar;
-    recursive = true;
   };
 
   xdg.configFile.qtile = {
@@ -158,7 +139,22 @@
     recursive = true;
   };
   
-  services.swayosd.enable = true;
+  xdg.configFile.ranger = {
+    source = ./ranger;
+    recursive = true;
+  };
+
+  xdg.configFile.betterlockscreen = {
+    source = ./betterlockscreen;
+    recursive = true;
+  };
+  
+  xdg.configFile.picom = {
+    source = ./picom;
+    recursive = true;
+  };
+
+  services.betterlockscreen.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

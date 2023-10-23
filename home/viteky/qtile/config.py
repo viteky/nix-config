@@ -2,7 +2,7 @@
 import os
 import subprocess
 from libqtile import bar, layout, widget, extension, hook, qtile
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from qtile_extras import widget
@@ -68,7 +68,7 @@ keys = [
 groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 group_labels = [" ", " ", "󰍹 ", "󰈙 ", " ", "󰭹 ", " ", "VID", "󰊗 "]
-group_layouts = ["Max", "MonadTall", "MonadTall", "MonadTall", "Max", "MonadTall", "MonadTall", "MonadTall", "MonadTall"]
+group_layouts = ["MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall"]
 
 for i in range(len(group_names)):
     groups.append(
@@ -281,8 +281,8 @@ def init_widgets_screen2():
 
 def init_screens():
     return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=40, background="#00000000")),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40))
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40, background="#00000000")),
+            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40, background="#00000000"))
            ]
 
 if __name__ in ["config", "__main__"]:
@@ -333,6 +333,11 @@ wl_input_rules = None
 def start_once():
     home = os.path.expanduser('~')
     subprocess.call([home + '/.config/qtile/autostart.sh'])
+
+@hook.subscribe.client_new
+def new_client(client):
+    if client.name == "Firefox":
+        client.togroup("1")
 
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
