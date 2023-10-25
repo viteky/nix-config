@@ -3,14 +3,13 @@
 pkgs.stdenv.mkDerivation {
   name = "sddm-theme";
   src = pkgs.fetchFromGitHub {
-      owner = "nautilor";
-      repo = "nord-sddm";
-      rev = "ad72c3c7048c8aabe85bab41cbeab5f3c4502250";
-      sha256 = "02idn5hggbqc0j01vhxij5nh748sgva123103d5ir0nl676rl782";
+      owner = "viteky";
+      repo = "sddm-themes";
+      rev = "baf6f8bb779c490ceceb4560a989443b1afab22f";
+      sha256 = "EmAAloXHs7l/gvXoERnjI2bTZp8ACaKpFSVWO8KXpHo=";
   };
   installPhase = ''
     mkdir -p $out
-    cd Nord
     cp -R ./* $out/
     '';
 }

@@ -25,7 +25,7 @@
     };
   };
 
-  colorScheme = inputs.nix-colors.colorSchemes.nord;
+  colorScheme = inputs.nix-colors.colorSchemes.dracula;
   
   home = {
     username = "viteky";
@@ -72,6 +72,7 @@
     win-virtio
     win-spice
     xfce.thunar
+    xfce.thunar-volman
 
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -104,32 +105,31 @@
 
   services.picom = {
     enable = true;
-    package = pkgs.picom-next;
+    package = pkgs.picom-allusive;
   };
 
   # Themes
   gtk = {
     enable = true;
-    cursorTheme.package = pkgs.nordzy-cursor-theme;
-    cursorTheme.name = "Nordzy-cursors";
-    theme.package = pkgs.nordic;
-    theme.name = "Nordic";
-    iconTheme.package = pkgs.nordzy-icon-theme;
-    iconTheme.name = "Nordzy-dark";
+    cursorTheme.name = "Dracula-cursors";
+    theme.package = pkgs.dracula-theme;
+    theme.name = "Dracula";
+    iconTheme.package = pkgs.dracula-icon-theme;
+    iconTheme.name = "Dracula";
   };
 
 
   qt = {
     enable = true;
     platformTheme = "gtk";
-    style.name = "Nordic";
-    style.package = pkgs.nordic;
+    style.name = "Dracula";
+    style.package = pkgs.dracula-theme;
   };
   
   home.pointerCursor = {
     x11.enable = true;
-    package = pkgs.nordzy-cursor-theme;
-    name = "Nordzy-cursors";
+    package = pkgs.dracula-theme;
+    name = "Dracula-cursors";
   };
 
   fonts.fontconfig.enable = true;

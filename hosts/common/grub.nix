@@ -3,14 +3,14 @@
 pkgs.stdenv.mkDerivation {
   name = "grub-theme";
   src = pkgs.fetchFromGitHub {
-      owner = "nautilor";
-      repo = "nord-sddm";
-      rev = "ad72c3c7048c8aabe85bab41cbeab5f3c4502250";
-      sha256 = "02idn5hggbqc0j01vhxij5nh748sgva123103d5ir0nl676rl782";
+      owner = "dracula";
+      repo = "grub";
+      rev = "0e721d99dbf0d5d6c4fd489b88248365b7a60d12";
+      sha256 = "SBAXGJbNYdr89FSlqzgkiW/c23yTHYvNxxU8F1hMfXI=";
   };
   installPhase = ''
     mkdir -p $out
-    cd Nord
+    cd dracula
     cp -R ./* $out/
     '';
 }

@@ -52,7 +52,7 @@
       efiSupport = true;
       efiInstallAsRemovable = true;
       device = "nodev";
-      theme = pkgs.nixos-grub2-theme;
+      theme = "${import ./grub.nix { inherit pkgs; }}";
     };
   };
   boot.supportedFilesystems = [ "ntfs" ];
