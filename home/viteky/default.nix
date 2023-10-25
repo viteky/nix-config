@@ -1,21 +1,17 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+{inputs, outputs, lib, config, pkgs, ...}: 
+
+{  
+
   # You can import other home-manager modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
     ./alacritty
-    ./sway.nix
+    inputs.nix-colors.homeManagerModules.default
   ];
-  
+
   nixpkgs = {
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
@@ -29,6 +25,8 @@
     };
   };
 
+  colorScheme = inputs.nix-colors.colorSchemes.nord;
+  
   home = {
     username = "viteky";
     homeDirectory = "/home/viteky";
@@ -36,7 +34,11 @@
 
   home.packages = with pkgs; [
     autorandr
+    bitwarden
+    bitwarden-cli
+    discord
     firefox
+    flameshot
     gh
     gimp
     gnome.seahorse
@@ -44,6 +46,7 @@
     neofetch
     nitrogen
     neovim
+    libreoffice-fresh
     lxappearance
     obs-studio
     ranger
@@ -60,10 +63,12 @@
     spice-gtk
     spotify
     steam
+    thunderbird
     unzip
     ueberzug
     virt-manager
     virt-viewer
+    vlc
     win-virtio
     win-spice
     xfce.thunar
@@ -105,8 +110,8 @@
   # Themes
   gtk = {
     enable = true;
-    cursorTheme.package = pkgs.bibata-cursors;
-    cursorTheme.name = "Bibata-Modern-Ice";
+    cursorTheme.package = pkgs.nordzy-cursor-theme;
+    cursorTheme.name = "Nordzy-cursors";
     theme.package = pkgs.nordic;
     theme.name = "Nordic";
     iconTheme.package = pkgs.nordzy-icon-theme;
@@ -123,8 +128,8 @@
   
   home.pointerCursor = {
     x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
+    package = pkgs.nordzy-cursor-theme;
+    name = "Nordzy-cursors";
   };
 
   fonts.fontconfig.enable = true;
@@ -155,6 +160,8 @@
   };
 
   services.betterlockscreen.enable = true;
+  services.dunst.enable = true;
+  services.gnome-keyring.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

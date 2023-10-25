@@ -15,9 +15,6 @@
 
     # Nix Colors
     nix-colors.url = "github:misterio77/nix-colors";
-
-    # Waybar
-    waybar.url = "github:Alexays/Waybar";
   };
 
   outputs = {
@@ -26,7 +23,7 @@
     nixpkgs-stable,
     home-manager,
     hardware,
-    waybar,
+    nix-colors,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -85,8 +82,6 @@
         modules = [
           # > Our main home-manager configuration file <
           ./home/viteky
-          waybar.homeManagerModules.default
-          {programs.waybar.enable = true;}
         ];
       };
     };
