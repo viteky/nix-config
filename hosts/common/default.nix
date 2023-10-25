@@ -81,6 +81,7 @@
     layout = "au";
     displayManager = {
       sddm.enable = true;
+      sddm.theme = "${import ./sddm.nix { inherit pkgs; }}";
     };
     windowManager.qtile = {
       enable = true;
@@ -147,6 +148,8 @@
   environment.systemPackages = with pkgs; [
     ntfs3g
     exfat
+    libsForQt5.qt5.qtgraphicaleffects
+    libsForQt5.qt5.qtquickcontrols2
   ];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
