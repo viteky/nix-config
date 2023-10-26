@@ -40,6 +40,7 @@
     discord
     firefox
     flameshot
+    fzf
     gh
     gimp
     gnome.seahorse
@@ -82,10 +83,19 @@
     userEmail = "jayden.vitek@gmail.com";
   };
 
-  # Bash
-  programs.bash = {
+  programs.starship.enable = true;
+  programs.fish = {
     enable = true;
-    enableCompletion = true;
+    interactiveShellInit = ''
+      set fish_greeting # Disable greeting
+    '';
+    shellAliases = {
+    };
+    plugins = [
+      { name = "grc"; src = pkgs.fishPlugins.grc; }
+      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish; }
+      { name = "hydro"; src = pkgs.fishPlugins.hydro; }
+    ];
   };
 
   # Enable home-manager
