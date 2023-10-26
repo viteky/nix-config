@@ -105,9 +105,9 @@ for i in groups:
 #########################
 #       Layouts         #
 #########################
-colors = colors.Nord
+colors = colors.Dracula
 
-layout_theme = {"border_width": 3,
+layout_theme = {"border_width": 4,
                 "margin": 10,
                 "border_focus": colors[8],
                 "border_normal": colors[7]

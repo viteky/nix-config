@@ -1,3 +1,5 @@
+{ pkgs, config, ...}:
+
 {
   programs.alacritty = {
     enable = true;
@@ -14,61 +16,50 @@
       };
       colors = {
         primary = {
-          background = "#2e3440";
-          foreground = "#d8dee9";
-          dim_foreground = "#a5abb6";
+          background = "#${config.colorScheme.colors.base00}";
+          foreground = "#${config.colorScheme.colors.base05}";
         };
         cursor = {
-          text = "#2e3440";
-          cursor = "#d8dee9";
+          text = "#${config.colorScheme.colors.base00}";
+          cursor = "#${config.colorScheme.colors.base05}";
         };
         vi_mode_cursor = {
-          text = "#2e3440";
-          cursor = "#d8dee9";
+          text = "#${config.colorScheme.colors.base00}";
+          cursor = "#${config.colorScheme.colors.base05}";
         };
         selection = {
           text = "CellForeground";
-          background = "#4c566a";
+          background = "#${config.colorScheme.colors.base01}";
         };
         search = {
           matches = {
             foreground = "CellBackground";
-            background = "#88c0d0";
+            background = "#${config.colorScheme.colors.base01}";
           };
-          #bar = {
-            #background = "#434c5e";
-            #foreground = "#d8dee9";
-          #};
+          footer_bar = {
+            background = "#${config.colorScheme.colors.base00}";
+            foreground = "#${config.colorScheme.colors.base05}";
+          };
         };
         normal = {
-          black = "#3b4252";
-          red = "#bf616a";
-          green = "#a3be8c";
-          yellow = "#ebcb8b";
-          blue = "#81a1c1";
-          magenta = "#b48ead";
-          cyan = "#88c0d0";
-          white = "#e5e9f0";
+          black = "#${config.colorScheme.colors.base01}";
+          red = "#${config.colorScheme.colors.base08}";
+          green = "#${config.colorScheme.colors.base0A}";
+          yellow = "#${config.colorScheme.colors.base0B}";
+          blue = "#${config.colorScheme.colors.base0D}";
+          magenta = "#${config.colorScheme.colors.base0E}";
+          cyan = "#${config.colorScheme.colors.base0C}";
+          white = "#${config.colorScheme.colors.base05}";
         };
         bright = {
-          black = "#4c566a";
-          red = "#bf616a";
-          green = "#a3be8c";
-          yellow = "#ebcb8b";
-          blue = "#81a1c1";
-          magenta = "#b48ead";
-          cyan = "#8fbcbb";
-          white = "#eceff4";
-        };
-        dim = {
-          black = "#373e4d";
-          red = "#94545d";
-          green = "#809575";
-          yellow = "#b29e75";
-          blue = "#68809a";
-          magenta = "#8c738c";
-          cyan = "#6d96a5";
-          white = "#aeb3bb";
+          black = "#${config.colorScheme.colors.base03}";
+          red = "#${config.colorScheme.colors.base08}";
+          green = "#${config.colorScheme.colors.base0A}";
+          yellow = "#${config.colorScheme.colors.base0B}";
+          blue = "#${config.colorScheme.colors.base0D}";
+          magenta = "#${config.colorScheme.colors.base0E}";
+          cyan = "#${config.colorScheme.colors.base0C}";
+          white = "#${config.colorScheme.colors.base07}";
         };
       };
 

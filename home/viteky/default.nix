@@ -9,6 +9,7 @@
     # If you want to use modules your own flake exports (from modules/home-manager):
     # outputs.homeManagerModules.example
     ./alacritty
+    ./rofi
     inputs.nix-colors.homeManagerModules.default
   ];
 
@@ -51,12 +52,6 @@
     obs-studio
     ranger
     lutris
-    
-    # Rofi
-    rofi
-    rofi-power-menu
-    rofi-screenshot
-    rofi-bluetooth
     
     spice-protocol
     spice
