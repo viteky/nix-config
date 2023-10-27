@@ -95,6 +95,7 @@
       { name = "grc"; src = pkgs.fishPlugins.grc; }
       { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish; }
       { name = "hydro"; src = pkgs.fishPlugins.hydro; }
+      { name = "z"; src = pkgs.fishPlugins.z; }
     ];
   };
 

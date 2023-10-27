@@ -1,18 +1,20 @@
 # Imports
 import os
 import subprocess
+import platform
 from libqtile import bar, layout, widget, extension, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from qtile_extras import widget
-from qtile_extras.widget.decorations import BorderDecoration
+from qtile_extras.widget.decorations import BorderDecoration, RectDecoration
 import colors
 
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 editor = "nvim"
+hostname = platform.uname().node
 
 #########################
 #       Keybindings     #
@@ -67,7 +69,7 @@ keys = [
 
 groups = []
 group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-group_labels = [" ", " ", "󰍹 ", "󰈙 ", " ", "󰭹 ", " ", "VID", "󰊗 "]
+group_labels = [" ", " ", "󰍹 ", "󰈙 ", " ", "󰭹 ", " ", " ", "󰊗 "]
 group_layouts = ["MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall", "MonadTall"]
 
 for i in range(len(group_names)):
@@ -109,8 +111,8 @@ colors = colors.Dracula
 
 layout_theme = {"border_width": 4,
                 "margin": 10,
-                "border_focus": colors[8],
-                "border_normal": colors[7]
+                "border_focus": colors[7],
+                "border_normal": colors[6]
                 }
 
 layouts = [
@@ -136,22 +138,23 @@ layouts = [
 widget_defaults = dict(
     font="JetBrainsMono Nerd Font",
     fontsize=16,
-    padding=3,
+    padding=3
 )
 extension_defaults = widget_defaults.copy()
+decoration_group = {
+    "decorations": [
+        RectDecoration(colour=colors[0], radius=10, filled=True, padding_y=4, group=True)
+    ],
+    "padding": 10,
+}
 
 def init_widgets_list():
     widgets_list = [
         widget.TextBox(
-                 text = '  ',
-                 fontsize = 30,
+                 text = '  ',
+                 fontsize = 24,
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show drun -show-icons")},
                  ),
-        widget.Prompt(
-                 font = "JetBrainsMono Nerd Font",
-                 fontsize=14,
-                 foreground = colors[1]
-        ),
         widget.GroupBox(
                  font = "JetBrainsMono Nerd Font",
                  fontsize = 20,
@@ -168,14 +171,8 @@ def init_widgets_list():
                  this_current_screen_border = colors[7],
                  this_screen_border = colors [4],
                  other_current_screen_border = colors[7],
-                 other_screen_border = colors[4],
-                 ),
-        widget.TextBox(
-                 text = '|',
-                 font = "JetBrainsMono Nerd Font",
-                 foreground = colors[1],
-                 padding = 2,
-                 fontsize = 14
+                 other_screen_border = colors[4], 
+                 **decoration_group
                  ),
         widget.CurrentLayoutIcon(
                  custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
@@ -183,27 +180,16 @@ def init_widgets_list():
                  padding = 0,
                  scale = 0.7
                  ),
-        widget.TextBox(
-                 text = '|',
-                 font = "JetBrainsMono Nerd Font",
-                 foreground = colors[1],
-                 padding = 2,
-                 fontsize = 14
-                 ),
+        widget.Spacer(length = 200),
         widget.WindowName(
                  foreground = colors[6],
-                 max_chars = 40
+                 max_chars = 40,
                  ),
-        widget.Spacer(length = 8),
+        widget.Spacer(length = 200),
         widget.CPU(
                  format = '  {load_percent}%',
                  foreground = colors[4],
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[4],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
+                 **decoration_group
                  ),
         widget.Spacer(length = 8),
         widget.Memory(
@@ -211,55 +197,26 @@ def init_widgets_list():
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
                  format = '{MemUsed: .0f}{mm}',
                  fmt = '󱡶 {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[8],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
-                 ),
-        widget.Spacer(length = 8),
-        widget.DF(
-                 update_interval = 60,
-                 foreground = colors[5],
-                 #mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e df')},
-                 partition = '/',
-                 #format = '[{p}] {uf}{m} ({r:.0f}%)',
-                 format = '{uf}{m} free',
-                 fmt = '󰋊 {}',
-                 visible_on_warn = False,
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[5],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
+                 **decoration_group
                  ),
         widget.Spacer(length = 8),
         widget.Volume(
                  foreground = colors[7],
                  fmt = ' {}',
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[7],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
+                 **decoration_group
                  ),
         widget.Spacer(length = 8),
         widget.Clock(
                  foreground = colors[8],
                  format = "%a, %b %d - %H:%M",
-                 decorations=[
-                     BorderDecoration(
-                         colour = colors[8],
-                         border_width = [0, 0, 2, 0],
-                     )
-                 ],
+                 **decoration_group
                  ),
         widget.Spacer(length = 8),
-        widget.Systray(padding = 3),
-        widget.Spacer(length = 8),
+        widget.TextBox(
+                 text = '󰐥 ',
+                 fontsize = 24,
+                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show power-menu -show-icons")},
+                 ),       
         ]
     return widgets_list
 
@@ -315,7 +272,10 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+    ],
+    border_focus =colors[7],
+    border_normal =colors[6],
+    border_width = 4,
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
