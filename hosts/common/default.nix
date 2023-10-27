@@ -88,6 +88,8 @@
       enable = true;
       extraPackages = python3Packages: with python3Packages; [
           qtile-extras
+          dbus-next
+          iwlib
         ];    
     };
   };
@@ -151,6 +153,8 @@
     exfat
     libsForQt5.qt5.qtgraphicaleffects
     libsForQt5.qt5.qtquickcontrols2
+    python311Packages.iwlib
+    python311Packages.dbus-next
   ];
 
   programs.fish.enable = true;

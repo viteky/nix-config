@@ -2,7 +2,7 @@
 import os
 import subprocess
 import platform
-from libqtile import bar, layout, widget, extension, hook, qtile
+from libqtile import bar, layout, extension, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -119,7 +119,7 @@ layouts = [
     layout.MonadTall(**layout_theme),
     layout.Columns(**layout_theme),
     layout.Max(**layout_theme),
-    layout.Stack(**layout_theme, num_stacks=2),
+    #layout.Stack(**layout_theme, num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
     # layout.MonadWide(),
@@ -155,6 +155,13 @@ def init_widgets_list():
                  fontsize = 24,
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show drun -show-icons")},
                  ),
+        widget.CurrentLayoutIcon(
+                 custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
+                 foreground = colors[1],
+                 padding = 0,
+                 scale = 0.7
+                 ),
+        widget.Spacer(length = bar.STRETCH),
         widget.GroupBox(
                  font = "JetBrainsMono Nerd Font",
                  fontsize = 20,
@@ -174,41 +181,26 @@ def init_widgets_list():
                  other_screen_border = colors[4], 
                  **decoration_group
                  ),
-        widget.CurrentLayoutIcon(
-                 custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
-                 foreground = colors[1],
-                 padding = 0,
-                 scale = 0.7
-                 ),
-        widget.Spacer(length = 200),
-        widget.WindowName(
-                 foreground = colors[6],
-                 max_chars = 40,
-                 ),
-        widget.Spacer(length = 200),
-        widget.CPU(
-                 format = '  {load_percent}%',
-                 foreground = colors[4],
+        widget.Spacer(length = bar.STRETCH),
+        widget.PulseVolume(
+                 #foreground = colors[7],
+                 #fmt = ' {}',
+                 emoji = 'True',
+                 emoji_list = ['󰝟', '󰕿', '󰖀', '󰕾'],
+                 fontsize = 20,
+                 mode = 'icon',
                  **decoration_group
                  ),
-        widget.Spacer(length = 8),
-        widget.Memory(
-                 foreground = colors[8],
-                 mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(terminal + ' -e btop')},
-                 format = '{MemUsed: .0f}{mm}',
-                 fmt = '󱡶 {}',
-                 **decoration_group
-                 ),
-        widget.Spacer(length = 8),
-        widget.Volume(
-                 foreground = colors[7],
-                 fmt = ' {}',
-                 **decoration_group
-                 ),
-        widget.Spacer(length = 8),
+        widget.UPowerWidget(
+            battery_height = 10,
+            battery_width = 20,
+            **decoration_group,
+            ),
+        widget.WiFiIcon(
+            **decoration_group
+        ),
         widget.Clock(
-                 foreground = colors[8],
-                 format = "%a, %b %d - %H:%M",
+                 format = "%d/%m/%y - %I:%M%p",
                  **decoration_group
                  ),
         widget.Spacer(length = 8),
@@ -296,7 +288,7 @@ def start_once():
 
 @hook.subscribe.client_new
 def new_client(client):
-    if client.name == "Firefox":
+    if client.wm_class == "firefox":
         client.togroup("1")
 
 
