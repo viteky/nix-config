@@ -8,6 +8,9 @@
   pkgs,
   ...
 }: {
+  imports = [
+    ./awesome.nix
+  ];
 
   home-manager = {
     extraSpecialArgs = { inherit inputs outputs; };
@@ -81,9 +84,11 @@
     enable = true;
     layout = "au";
     displayManager = {
+      defaultSession = "none+awesome";
       sddm.enable = true;
       sddm.theme = "${import ./sddm.nix { inherit pkgs; }}";
     };
+  
     windowManager.qtile = {
       enable = true;
       extraPackages = python3Packages: with python3Packages; [
@@ -109,6 +114,7 @@
     polkit.enable = true;
     rtkit.enable = true;
     sudo.wheelNeedsPassword = false;
+    pam.services.sddm.enableGnomeKeyring = true;
   };
 
   # Audio
@@ -153,12 +159,18 @@
     exfat
     libsForQt5.qt5.qtgraphicaleffects
     libsForQt5.qt5.qtquickcontrols2
-    python311Packages.iwlib
-    python311Packages.dbus-next
   ];
 
   programs.fish.enable = true;
-  
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+      thunar-volman
+    ];
+  }; 
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
 }

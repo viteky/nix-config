@@ -10,20 +10,24 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Hardware
-    hardware.url = "github:nixos/nixos-hardware";
-
     # Nix Colors
     nix-colors.url = "github:misterio77/nix-colors";
+  
+    nixpkgs-f2k.url = "github:moni-dz/nixpkgs-f2k";
+
+    #Awesomewm modules
+    awesome-wm-widgets = {
+      url = github:streetturtle/awesome-wm-widgets;
+      flake = false;
+    };
+    bling = {url = github:BlingCorp/bling; flake = false;};
+    charitable = {url = github:frioux/charitable; flake = false;};
   };
 
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-stable,
     home-manager,
-    hardware,
-    nix-colors,
     ...
   } @ inputs: let
     inherit (self) outputs;

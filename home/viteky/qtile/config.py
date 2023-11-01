@@ -5,7 +5,6 @@ import platform
 from libqtile import bar, layout, extension, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 from qtile_extras import widget
 from qtile_extras.widget.decorations import BorderDecoration, RectDecoration
 import colors
@@ -150,16 +149,18 @@ decoration_group = {
 
 def init_widgets_list():
     widgets_list = [
+        widget.Spacer(length = 5),
         widget.TextBox(
-                 text = '  ',
+                 text = '',
                  fontsize = 24,
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show drun -show-icons")},
+                 **decoration_group
                  ),
         widget.CurrentLayoutIcon(
                  custom_icon_paths = [os.path.expanduser("~/.config/qtile/icons")],
                  foreground = colors[1],
-                 padding = 0,
-                 scale = 0.7
+                 scale = 0.2,
+                 **decoration_group
                  ),
         widget.Spacer(length = bar.STRETCH),
         widget.GroupBox(
@@ -183,8 +184,6 @@ def init_widgets_list():
                  ),
         widget.Spacer(length = bar.STRETCH),
         widget.PulseVolume(
-                 #foreground = colors[7],
-                 #fmt = ' {}',
                  emoji = 'True',
                  emoji_list = ['󰝟', '󰕿', '󰖀', '󰕾'],
                  fontsize = 20,
@@ -203,11 +202,11 @@ def init_widgets_list():
                  format = "%d/%m/%y - %I:%M%p",
                  **decoration_group
                  ),
-        widget.Spacer(length = 8),
         widget.TextBox(
                  text = '󰐥 ',
                  fontsize = 24,
                  mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn("rofi -show power-menu -show-icons")},
+                 **decoration_group
                  ),       
         ]
     return widgets_list
@@ -229,9 +228,9 @@ def init_widgets_screen2():
 # For ex: Screen(top=bar.Bar(widgets=init_widgets_screen2(), background="#00000000", size=24)),
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=40, background="#00000000")),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40, background="#00000000")),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=40, background="#00000000"))
+    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=36, background="#00000000")),
+            Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=36, background="#00000000")),
+            Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=36, background="#00000000"))
            ]
 
 if __name__ in ["config", "__main__"]:
@@ -264,6 +263,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="pavucontrol"),
     ],
     border_focus =colors[7],
     border_normal =colors[6],
@@ -288,7 +288,7 @@ def start_once():
 
 @hook.subscribe.client_new
 def new_client(client):
-    if client.wm_class == "firefox":
+    if client.Match(wm_class == "firefox"):
         client.togroup("1")
 
 

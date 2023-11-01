@@ -53,7 +53,7 @@
     obs-studio
     ranger
     lutris
-    
+    pavucontrol
     spice-protocol
     spice
     spice-gtk
@@ -67,8 +67,6 @@
     vlc
     win-virtio
     win-spice
-    xfce.thunar
-    xfce.thunar-volman
 
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -165,10 +163,36 @@
     recursive = true;
   };
 
+#  xdg.configFile.awesome = {
+#    source = ./awesome;
+#    recursive = true;
+#  };
+
+  xdg = {
+    enable = true;
+    userDirs = {
+      enable = true;
+      documents = "${config.home.homeDirectory}/Documents";
+      music = "${config.home.homeDirectory}/Music";
+      pictures = "${config.home.homeDirectory}/Pictures";
+      videos = "${config.home.homeDirectory}/Videos";
+    };
+  };
+
   services.betterlockscreen.enable = true;
   services.dunst.enable = true;
   services.gnome-keyring.enable = true;
 
+  home = {
+    activation = {
+    installAwesomeConfig = lib.hm.dag.entryAfter ["writeBoundary"]''
+        ln -s "${config.home.homeDirectory}/.nix-config/home/viteky/awesome" "${config.home.homeDirectory}/.config"
+        cp -r ${inputs.charitable.outPath} ${config.home.homeDirectory}/.config/awesome/charitable
+        cp -r ${inputs.bling.outPath} ${config.home.homeDirectory}/.config/awesome/bling
+        cp -r ${inputs.awesome-wm-widgets.outPath} "${config.home.homeDirectory}/.config/awesome/awesome-wm-widgets"
+      '';  
+    };
+  };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   
