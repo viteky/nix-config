@@ -67,7 +67,8 @@
     vlc
     win-virtio
     win-spice
-
+    xdg-user-dirs
+   
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     font-awesome
@@ -97,8 +98,6 @@
     ];
   };
 
-  # Enable home-manager
-  programs.home-manager.enable = true;
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
@@ -163,11 +162,6 @@
     recursive = true;
   };
 
-#  xdg.configFile.awesome = {
-#    source = ./awesome;
-#    recursive = true;
-#  };
-
   xdg = {
     enable = true;
     userDirs = {
@@ -193,6 +187,10 @@
       '';  
     };
   };
+  
+  # Enable home-manager
+  programs.home-manager.enable = true;
+  
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
   

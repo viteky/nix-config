@@ -215,7 +215,7 @@ awful.screen.connect_for_each_screen(function(s)
             s.mylayoutbox,
             battery_widget({
                 path_to_icons = "/home/viteky/.config/awesome/icons"
-            })
+            }),
         },
     }
 end)

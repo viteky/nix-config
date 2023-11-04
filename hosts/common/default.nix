@@ -63,12 +63,13 @@
   # Users
   users.users = {
     viteky = {
+      description = "Jayden Vitek";
       isNormalUser = true;
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
-        extraGroups = ["wheel" "networkManager" "libvirtd" "audio" "video" "storage" "disk"];
+      extraGroups = ["wheel" "networkManager" "libvirtd" "audio" "video" "storage" "disk"];
     };
   };
 
