@@ -68,7 +68,12 @@
     win-virtio
     win-spice
     xdg-user-dirs
-   
+    (retroarch.override {
+      cores = with libretro; [
+        vba-next
+        mupen64plus
+      ];
+    })
     # Fonts
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     font-awesome
