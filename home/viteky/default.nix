@@ -72,6 +72,11 @@
       cores = with libretro; [
         vba-next
         mupen64plus
+        desmume
+        dolphin
+        snes9x
+        citra
+        pcsx2
       ];
     })
     # Fonts
