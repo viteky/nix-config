@@ -1,4 +1,10 @@
-{
+{inputs, ...}: {
+  flake-file.inputs = {
+    vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+    };
+  };
+
   den.aspects.editors.vscode = {
     homeManager = {
       pkgs,
@@ -6,17 +12,25 @@
       host,
       ...
     }: {
+      nixpkgs.overlays = [inputs.vscode-extensions.overlays.default];
       programs.vscode = {
         enable = true;
-        package = pkgs.vscode-fhs;
+        # package = pkgs.vscode-fhs;
         profiles.default = {
           enableUpdateCheck = false;
-          extensions = with pkgs.vscode-extensions; [
+          extensions = with pkgs.vscode-marketplace; [
             mkhl.direnv
             ms-vscode.live-server
-            vscodevim.vim
+            # vscodevim.vim
             github.copilot-chat
             jnoortheen.nix-ide
+            datakurre.devenv
+            usernamehw.errorlens
+            eamodio.gitlens
+            aaron-bond.better-comments
+            formulahendry.auto-rename-tag
+            christian-kohler.path-intellisense
+            gruntfuggly.todo-tree
           ];
 
           userSettings = {
@@ -51,14 +65,6 @@
       home.packages = [
         pkgs.nixd
         pkgs.alejandra
-        ((pkgs.vscode.override {isInsiders = true;}).overrideAttrs (oldAttrs: {
-          src = fetchTarball {
-            url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
-            sha256 = "0mb66n7fz6mdcqjqx381fsdz3cm476yrabrb3g5yma18vgdvm39v";
-          };
-          version = "latest";
-          buildInputs = oldAttrs.buildInputs ++ [pkgs.krb5];
-        }))
       ];
     };
   };

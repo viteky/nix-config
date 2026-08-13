@@ -13,7 +13,6 @@ in {
       hashedPassword = "$y$j9T$2D5SaX5FptP3DbhCWogiA/$JZ8n2BSwdZACqDxdYXsBdR8ZJMD3IawWoqGw7CWCV98";
       extraGroups = [
         "greeter"
-        # TODO: find out where these came from and what they are for
         "audio"
         "video"
         "storage"

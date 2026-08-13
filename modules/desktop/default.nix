@@ -1,6 +1,6 @@
 {
   den.aspects.desktop = {
-    nixos = {
+    nixos = {pkgs, ...}: {
       programs.dconf.enable = true;
       programs.seahorse.enable = true;
       fonts.fontconfig.enable = true;
@@ -22,6 +22,17 @@
           jack.enable = true;
         };
       };
+
+      environment.systemPackages = with pkgs; [
+        libreoffice-fresh
+        hunspell
+        hunspellDicts.en_AU
+        x2goclient
+        kdePackages.kdenlive
+        gnome-calculator
+        gimp
+        bitwarden-cli
+      ];
     };
 
     homeManager = {

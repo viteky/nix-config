@@ -13,6 +13,7 @@
       gaming
       editors.vscode
       desktop.noctalia
+      # editors.neovim
     ];
 
     nixos = {

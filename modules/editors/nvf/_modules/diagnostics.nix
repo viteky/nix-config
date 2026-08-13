@@ -1,6 +1,7 @@
 {lib, ...}: {
   vim.diagnostics = {
     enable = true;
+    nvim-lint.enable = true;
     config = {
       signs.text =
         lib.generators.mkLuaInline
@@ -17,6 +18,5 @@
       underline = false;
       update_in_insert = false;
     };
-    nvim-lint.enable = true;
   };
 }

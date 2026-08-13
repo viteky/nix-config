@@ -33,5 +33,6 @@
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 }

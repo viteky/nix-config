@@ -1,14 +1,15 @@
+#TODO: Find out how to import nvf as a den aspect.
 {
   imports = [
     ./assistant.nix
     ./comments.nix
     ./git.nix
     ./lsp.nix
-    ./languages
+    ./languages.nix
     ./treesitter.nix
     ./filetree.nix
     ./statusline.nix
-    ./ui
+    ./ui.nix
     ./binds.nix
     ./dashboard.nix
     ./visuals.nix
