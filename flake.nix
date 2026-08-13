@@ -10,19 +10,7 @@
 
   inputs = {
     catppuccin.url = "github:catppuccin/nix";
-    dankcalendar = {
-      url = "github:AvengeMedia/dankcalendar";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     den.url = "github:denful/den";
-    dms = {
-      url = "github:AvengeMedia/DankMaterialShell/stable";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dms-plugin-registry = {
-      url = "github:AvengeMedia/dms-plugin-registry";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

@@ -17,14 +17,17 @@
       virtualisation.cores = 4;
       virtualisation.memorySize = 4096;
     };
+
+    fileSystems."/" = {
+      device = "/dev/vda";
+      fsType = "ext4";
+    };
   };
 
   den.aspects.igloo.includes = [
     den.aspects.desktop
     den.aspects.catppuccin
-    den.aspects.virtualisation
-    den.aspects.gaming
-    den.aspects.editors.vscode
+    den.aspects.desktop.noctalia
   ];
 
   perSystem = {pkgs, ...}: {

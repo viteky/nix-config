@@ -2,31 +2,57 @@
   den.aspects.tui.homeManager = {pkgs, ...}: {
     programs.yazi = {
       enable = true;
-      plugins = {
-        inherit
-          (pkgs.yaziPlugins)
-          full-border
-          starship
-          git
-          ;
-      };
-      enableZshIntegration = true;
       shellWrapperName = "y";
-      initLua = ''
-        require("full-border"):setup()
-        require("starship"):setup()
-        require("git"):setup()
-      '';
+      plugins = {
+        full-border = {
+          package = pkgs.yaziPlugins.full-border;
+          setup = true;
+        };
+        starship = {
+          package = pkgs.yaziPlugins.starship;
+          setup = true;
+        };
+        git = {
+          package = pkgs.yaziPlugins.git;
+          setup = true;
+        };
+        clipboard = pkgs.yaziPlugins.clipboard;
+        smart-enter = pkgs.yaziPlugins.smart-enter;
+      };
+
       settings.plugin.prepend_fetchers = [
         {
-          id = "git";
-          name = "*";
+          url = "*";
           run = "git";
+          group = "git";
         }
         {
-          id = "git";
-          name = "*/";
+          url = "*/";
           run = "git";
+          group = "git";
+        }
+      ];
+
+      keymap.mgr.prepend_keymap = [
+        {
+          on = "y";
+          run = ["yank" "plugin clipboard -- --action=copy"];
+          desc = "Yank selected files (copy)";
+        }
+        {
+          on = "x";
+          run = ["yank --cut" "plugin clipboard -- --action=copy"];
+          desc = "Yank selected files (cut)";
+        }
+        {
+          on = "<C-p>";
+          run = "plugin clipboard -- --action=paste";
+          desc = "Paste yanked system clipboard files";
+        }
+        {
+          on = "l";
+          run = "plugin smart-enter";
+          desc = "Enter the child directory, or open the file";
         }
       ];
     };

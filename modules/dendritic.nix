@@ -2,10 +2,9 @@
   imports = [
     (inputs.flake-file.flakeModules.dendritic or {})
     (inputs.den.flakeModules.dendritic or {})
-    # inputs.flake-file.flakeModules.allfollow
+    # (inputs.flake-file.flakeModules.allfollow or {})
   ];
 
-  # other inputs may be defined at a module using them.
   flake-file.inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     den.url = "github:denful/den";

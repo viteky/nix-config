@@ -7,9 +7,10 @@
     services.nextcloud = {
       enable = true;
       hostName = "nextcloud.viteky.net";
-      config.adminpassFile = config.sops.secrets.nextcloud-admin-pass.path;
+      config.adminuser = null;
+      # config.adminpassFile = config.sops.secrets.nextcloud-admin-pass.path;
       config.dbtype = "sqlite";
-      package = pkgs.nextcloud31;
+      package = pkgs.nextcloud34;
       extraAppsEnable = true;
       extraApps = {
         inherit (config.services.nextcloud.package.packages.apps) news contacts calendar tasks;

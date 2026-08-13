@@ -1,6 +1,6 @@
-{pkgs, ...}: {
+{
   den.aspects.server = {
-    nixos = {
+    nixos = {pkgs, ...}: {
       services = {
         sonarr.enable = true;
         radarr.enable = true;
@@ -16,7 +16,7 @@
         immich.enable = true;
         jellyfin.enable = true;
         audiobookshelf.enable = true;
-        services.adguardhome = {
+        adguardhome = {
           enable = true;
           allowDHCP = true;
           mutableSettings = true;

@@ -10,6 +10,13 @@
       programs.firefox = {
         enable = true;
         #configPath = "${config.xdg.configHome}/.mozilla/firefox";
+        policies = {
+          ExtensionSettings = {
+            "enhancerforyoutube@maximerf.addons.mozilla.org" = {
+              installation_mode = "allowed";
+            };
+          };
+        };
         profiles.default = {
           isDefault = true;
           settings = {
@@ -19,9 +26,9 @@
             "sidebar.revamp.round-content-area" = true;
             "sidebar.verticalTabs" = true;
             "sidebar.revamp" = true;
-            "sidebar.visibility" = "always-show";
             "extensions.autoDisableScopes" = 0;
           };
+
           extensions = {
             force = true;
             packages = with pkgs.nur.repos.rycee.firefox-addons; [
@@ -33,7 +40,6 @@
               consent-o-matic
               unpaywall
               stylus
-              enhancer-for-youtube
               firefox-color
             ];
           };
@@ -62,6 +68,7 @@
                 icon = nixos-icon;
                 definedAliases = ["@nw"];
               };
+
               "Home Manager Options" = {
                 urls = [{template = "https://home-manager-options.extranix.com/?query={searchTerms}&release=master";}];
                 icon = nixos-icon;
@@ -77,8 +84,14 @@
           };
         };
       };
+    };
 
-      catppuccin.firefox.force = true; 
+    nixos = {
+      xdg.mime.defaultApplications = {
+        "text/html" = "firefox.desktop";
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+      };
     };
   };
 }

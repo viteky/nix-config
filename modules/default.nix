@@ -20,7 +20,7 @@
           inputs.nur.overlays.default
         ];
       };
-
+      nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
       nix = {
         settings = {
           experimental-features = "nix-command flakes";
@@ -40,27 +40,14 @@
       };
 
       environment.systemPackages = with pkgs; [
-        devenv
         sbctl
         wget
         unzip
         sops
         # inputs.self.packages.${stdenv.hostPlatform.system}.nvf
-        ## UNI
         gcc
         gnumake
       ];
-
-      # xdg.mime = {
-      #   enable = true;
-      #   defaultApplications = {
-      #     "image/*" = "imv.desktop";
-      #     "text/*" = "nvim.desktop";
-      #     "video/*" = "mpv.desktop";
-      #     "application/zip" = "org.gnome.FileRoller.desktop";
-      #     "application/*" = "dms-open.desktop";
-      #   };
-      # };
 
       programs = {
         nh = {
@@ -80,46 +67,16 @@
         ];
       };
 
-      fonts.fontconfig.enable = true;
-      # services.gnome-keyring = {
-      #   enable = true;
-      #   components = ["pkcs11" "secrets" "ssh"];
-      # };
-
-      programs = {
-        gh.enable = true;
-        java.enable = true;
-        direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-          silent = true;
-        };
-      };
-
       xdg = {
         enable = true;
+        mime.enable = true;
+        portal.xdgOpenUsePortal = true;
         userDirs = {
           enable = true;
           createDirectories = true;
           setSessionVariables = true;
         };
 
-        portal.xdgOpenUsePortal = true;
-        mime.enable = true;
-        # mimeApps = {
-        #   enable = true;
-        #   defaultApplications = {
-        #     # "application/pdf" = "org.pwmt.zathura.desktop";
-        #     "x-scheme-handler/http" = "firefox.desktop";
-        #     "x-scheme-handler/https" = "firefox.desktop";
-        #     # "x-scheme-handler/http" = "dms-open.desktop";
-        #     # "x-scheme-handler/https" = "dms-open.desktop";
-        #     "text/html" = "firefox.desktop";
-        #     "x-scheme-handler/slack" = "slack.desktop";
-        #     "x-scheme-handler/terminal" = "kitty.desktop";
-        #     "inode/directory" = "org.gnome.Nautilus.desktop";
-        #   };
-        # };
         terminal-exec = {
           enable = true;
           settings = {

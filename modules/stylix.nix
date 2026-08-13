@@ -22,10 +22,12 @@
         };
         fonts = {
           monospace = {
-            package = pkgs.nerd-fonts.jetbrains-mono;
-            name = "JetBrainsMono Nerd Font";
+            package = pkgs.nerd-fonts.monaspace;
+            name = "MonaspiceNe Nerd Font";
           };
         };
+
+        targets.fontconfig.enable = true;
       };
     };
 
@@ -45,8 +47,16 @@
           }
         '';
         targets.gtk.enable = true;
-        targets.dank-material-shell.enable = true;
-        targets.dank-calendar.enable = true;
+        targets.fontconfig.enable = true;
+        targets.hyprland.enable = true;
+        targets.kitty = {
+          enable = true;
+          colors.enable = false;
+        };
+        targets.vscode = {
+          enable = true;
+          colors.enable = false;
+        };
       };
     };
   };

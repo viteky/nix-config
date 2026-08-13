@@ -4,7 +4,7 @@
   };
 
   den.aspects.catppuccin = {
-    nixos = {pkgs, ...}: {
+    nixos = {
       imports = [
         inputs.catppuccin.nixosModules.catppuccin
       ];
@@ -17,22 +17,9 @@
         cache.enable = true;
         gtk.icon.enable = false;
       };
-
-      fonts.packages = with pkgs; [
-        nerd-fonts.jetbrains-mono
-        noto-fonts-color-emoji
-      ];
-
-      fonts.fontconfig = {
-        enable = true;
-        defaultFonts = {
-          monospace = ["JetBrainsMono Nerd Font"];
-          emoji = ["Noto Color Emoji"];
-        };
-      };
     };
 
-    homeManager = {pkgs, config, ...}: {
+    homeManager = {
       imports = [
         inputs.catppuccin.homeModules.catppuccin
       ];
@@ -43,6 +30,8 @@
         flavor = "macchiato";
         accent = "blue";
         gtk.icon.enable = false;
+        firefox.force = true;
+        thunderbird.profile = "default";
       };
     };
   };

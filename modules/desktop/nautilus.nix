@@ -9,7 +9,6 @@
         gvfs.enable = true;
         tumbler.enable = true;
         udisks2.enable = true;
-        devmon.enable = false;
       };
 
       programs.nautilus-open-any-terminal = {
@@ -25,6 +24,13 @@
       ];
 
       environment.pathsToLink = ["share/thumbnailers"];
+
+      xdg.mime = {
+        enable = true;
+        defaultApplications = {
+          "inode/directory" = "org.gnome.Nautilus.desktop";
+        };
+      };
     };
 
     homeManager = {user, ...}: {

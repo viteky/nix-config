@@ -2,7 +2,6 @@
   den.aspects.server.nixos = {
     services.qbittorrent = {
       enable = true;
-      group = "media";
       webuiPort = 8081;
       serverConfig = {
         LegalNotice.Accepted = true;

@@ -3,6 +3,7 @@
     nixos = {
       programs.dconf.enable = true;
       programs.seahorse.enable = true;
+      fonts.fontconfig.enable = true;
       hardware.bluetooth.enable = true;
       security = {
         polkit.enable = true;
@@ -25,6 +26,7 @@
 
     homeManager = {
       programs.mpv.enable = true;
+      fonts.fontconfig.enable = true;
     };
   };
 }

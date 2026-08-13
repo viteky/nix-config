@@ -1,9 +1,11 @@
 {
   den.aspects.desktop = {
-    programs.thunderbird = {
-      enable = true;
-      profiles.default = {
-        isDefault = true;
+    homeManager = {
+      programs.thunderbird = {
+        enable = true;
+        profiles.default = {
+          isDefault = true;
+        };
       };
     };
   };

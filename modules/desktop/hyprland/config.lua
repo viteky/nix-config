@@ -1,5 +1,19 @@
-hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
 
+-- Layer Rules
+hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
+hl.layer_rule({
+  name = "noctalia",
+  match = {
+    namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
+  },
+  no_anim = true,
+  ignore_alpha = 0.5,
+  blur = true,
+  blur_popups = true,
+})
+
+
+-- Keybinds
 local mod = "SUPER"
 
 -- Application Launchers
@@ -26,31 +40,28 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd("dms ipc call audio mute"), { locked = 
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("dms ipc call spotlight toggle"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("dms ipc call spotlight toggle"), { locked = true, repeating = true })
 
--- Window Rules
-hl.window_rule({ match = { class = "^(com.danklinux.dms)$" }, float = true })
-hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
-hl.window_rule({ match = { class = "^(org.gnome.Calculator)$" }, float = true })
-hl.window_rule({ match = { class = "^(org.gnome.Nautilus)$" }, float = true })
-
 hl.bind(mod .. "+ mouse:272", hl.dsp.window.drag(), { mouse = true, drag = true })
 hl.bind(mod .. "+ mouse:272", hl.dsp.window.float(), { mouse = true, click = true })
 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
-hl.bind(mod .. " + Q", hl.dsp.window.close())
-hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
+hl.bind(mod .. "+Q", hl.dsp.window.close())
+hl.bind(mod .. "+F", hl.dsp.window.fullscreen())
 
 local directions = { left = "l", right = "r", up = "u", down = "d", }
 for key, direction in pairs(directions) do
-  hl.bind(mod .. " + " .. key, hl.dsp.focus({ direction = direction }))
-  hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ direction = direction }))
+  hl.bind(mod .. "+" .. key, hl.dsp.focus({ direction = direction }))
+  hl.bind(mod .. "+SHIFT+" .. key, hl.dsp.window.move({ direction = direction }))
   -- hl.bind(mod .. " + CTRL + " .. key, hl.dsp.window.resize({ direction = direction }))
 end
 
 for i = 1, 10 do
   local key = i % 10
   hl.bind(mod .. "+ " .. key, hl.dsp.focus({ workspace = i, on_current_monitor = true }))
-  hl.bind(mod .. "+ SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+  hl.bind(mod .. "+SHIFT+" .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+hl.bind(mod .. "+ESCAPE", hl.dsp.workspace.toggle_special("sysmon"))
+hl.bind(mod .. "+G", hl.dsp.workspace.toggle_special("gaming"))
 
 local ipc = "noctalia msg "
 
@@ -69,23 +80,6 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"), { lo
 
 
 
-hl.window_rule({
-    match = { class = "dev.noctalia.Noctalia" },
-    float = true,
-    size = { 1080, 920 },
-})
-
-hl.layer_rule({
-  name = "noctalia",
-  match = {
-    namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$",
-  },
-  no_anim = true,
-  ignore_alpha = 0.5,
-  blur = true,
-  blur_popups = true,
-})
-
 hl.config({
   general = {
     resize_on_border = false,
@@ -96,7 +90,7 @@ hl.config({
     border_size = 2,
   },
   decoration = {
-    rounding = 20, 
+    rounding = 0, 
     rounding_power = 2,
     blur = {
       enabled = true,
@@ -105,7 +99,6 @@ hl.config({
       vibrancy = 0.1696,
     },
   },
-
   input = {
     follow_mouse = 2,
   },
@@ -130,3 +123,63 @@ hl.config({
     force_zero_scaling = false,
   },
 })
+
+-- Monitor Configuration
+
+hl.monitor({
+  output = "desc:ASUSTek COMPUTER INC VG279QM L9LMQS114293",
+  mode = "1920x1080@280.00",
+  position = "2048x0",
+})
+
+hl.monitor({
+  output = "desc:ASUSTek COMPUTER INC VG27A LBLMQS262134",
+  mode = "2560x1440@165.00",
+  position = "0x0",
+  scale = 1.25,
+})
+
+-- Startup Commands
+
+hl.on("hyprland.start", function()
+  hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
+end)
+
+-- Workspace Rules
+
+hl.workspace_rule({ workspace = "special:sysmon", on_created_empty = "kitty -e btop" })
+hl.workspace_rule({ workspace = "special:gaming"})
+
+-- Window Rules
+
+hl.window_rule({
+  match       = { class = "(pinentry-)(.*)" },
+  stay_focused = true,
+})
+hl.window_rule({
+    match = { class = "dev.noctalia.Noctalia" },
+    float = true,
+    size = { 1080, 920 },
+})
+hl.window_rule({
+  match = { class = "^(firefox)$" },
+  workspace = 1,
+})
+hl.window_rule({
+  match = { class = "^(code)$" },
+  workspace = 2,
+})
+hl.window_rule({
+  match = { class = "^(obsidian|libreoffice.*)$" },
+  workspace = 4,
+})
+hl.window_rule({
+  match = { class = "^(spotify)$" },
+  workspace = 5,
+})
+
+hl.window_rule({ match = { class = "^(com.danklinux.dms)$" }, float = true })
+hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
+hl.window_rule({ match = { class = "^(org.gnome.Calculator)$" }, float = true })
+hl.window_rule({ match = { class = "^(org.gnome.Nautilus)$" }, float = true })
+hl.window_rule({ match = { class = ".*"}, idle_inhibit = "fullscreen"})
