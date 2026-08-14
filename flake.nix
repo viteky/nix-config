@@ -28,6 +28,7 @@
       url = "github:nix-community/nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvf-config.url = "github:viteky/nvf-config";
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
     stylix = {
       url = "github:danth/stylix";

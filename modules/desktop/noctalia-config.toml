@@ -1,0 +1,149 @@
+[bar.default]
+capsule = true
+center = [ "notifications", "clock", "weather" ]
+end = [ "media", "tray", "group:g1" ]
+margin_edge = 5
+margin_ends = 5
+start = [ "launcher", "workspaces", "active_window", "nix-monitor" ]
+
+    [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
+    enabled = true
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "network", "bluetooth", "volume", "brightness", "session" ]
+    opacity = 1.0
+    padding = 6.0
+
+[calendar]
+enabled = true
+
+    [calendar.account.personal_google]
+    type = "google"
+
+[config]
+
+[dock]
+active_monitor_only = true
+auto_hide = true
+enabled = true
+icon_size = 32
+launcher_position = "start"
+pinned = [ "firefox", "kitty", "code" ]
+reserve_space = false
+show_dots = true
+
+[idle]
+behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
+
+    [idle.behavior.lock]
+    action = "lock"
+    enabled = true
+    timeout = 600.0
+
+    [idle.behavior.lock-and-suspend]
+    action = "lock_and_suspend"
+    enabled = true
+    timeout = 900.0
+
+    [idle.behavior.screen-off]
+    action = "screen_off"
+    enabled = true
+    timeout = 660.0
+
+[location]
+auto_locate = true
+
+[nightlight]
+enabled = true
+
+[osd]
+position = "bottom_center"
+
+    [osd.kinds]
+    media = false
+
+[plugin_settings."avivbintangaringga/nix-monitor"]
+clean_command = "nix-collect-garbage -d >/dev/null 2>&1 &"
+close_on_enter = false
+optimize_command = "nix-store --optimise -vv >/dev/null 2>&1 &"
+update_command = "nh os switch -u > /tmp/nixos-update.log 2>&1 &"
+
+[plugin_settings."kenn/keybind-cheatsheet"]
+show_actions = true
+
+[plugins]
+enabled = [
+    "noctalia/bitwarden",
+    "kenn/keybind-cheatsheet",
+    "icefish/phone-connect",
+    "avivbintangaringga/nix-monitor",
+]
+
+[shell]
+avatar_path = "/var/lib/AccountsService/icons/jaydenv"
+font_family = "Monaspace Neon"
+launch_apps_custom_command = "uwsm app -- $CMD"
+polkit_agent = true
+settings_show_advanced = false
+time_format = "{:%I:%M %p}"
+
+    [shell.greeter_sync]
+    auto_sync = true
+
+    [shell.launcher]
+    categories = false
+    compact = true
+
+        [shell.launcher.providers.calculator]
+        global = false
+
+    [shell.panel]
+    open_near_click_session = true
+    session_position = "center"
+
+[templates]
+
+[theme]
+builtin = "Catppuccin"
+community_palette = "Catppuccin Macchiato Blue"
+source = "community"
+wallpaper_scheme = "m3-content"
+
+[widget.active_window]
+interactive = false
+
+[widget.brightness]
+show_label = false
+
+[widget.clock]
+anchor = true
+format = "{:%I:%M %p}"
+
+[widget.media]
+hide_when_no_media = true
+
+[widget.network]
+show_label = false
+show_vpn_label = true
+
+[widget.nix-monitor]
+type = "avivbintangaringga/nix-monitor:nix-monitor"
+
+[widget.taskbar]
+group_single_icon_per_app = true
+hide_empty_workspaces = true
+show_all_outputs = true
+
+[widget.tray]
+drawer = true
+
+[widget.volume]
+show_label = false
+
+[widget.weather]
+show_condition = false
+
+[widget.workspaces]
+label_source = "name"

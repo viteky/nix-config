@@ -1,4 +1,3 @@
-
 -- Layer Rules
 hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
 hl.layer_rule({
@@ -12,7 +11,6 @@ hl.layer_rule({
   blur_popups = true,
 })
 
-
 -- Keybinds
 local mod = "SUPER"
 
@@ -25,7 +23,7 @@ hl.bind(mod .. " + N", hl.dsp.exec_cmd("dms ipc call notifications toggle"))
 hl.bind(mod .. " + Y", hl.dsp.exec_cmd("dms ipc call dankdash wallpaper"))
 hl.bind(mod .. " + TAB", hl.dsp.exec_cmd("dms ipc call hypr toggleOverview"))
 hl.bind(mod .. " + A", hl.dsp.exec_cmd("dms ipc call plugins toggle aiAssistant"))
-hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("ghostty"))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd("nautilus"))
 
 -- Security
@@ -47,7 +45,7 @@ hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind(mod .. "+Q", hl.dsp.window.close())
 hl.bind(mod .. "+F", hl.dsp.window.fullscreen())
 
-local directions = { left = "l", right = "r", up = "u", down = "d", }
+local directions = { left = "l", right = "r", up = "u", down = "d" }
 for key, direction in pairs(directions) do
   hl.bind(mod .. "+" .. key, hl.dsp.focus({ direction = direction }))
   hl.bind(mod .. "+SHIFT+" .. key, hl.dsp.window.move({ direction = direction }))
@@ -78,8 +76,6 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. "volume-mute"), { locked = true 
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. "brightness-up"), { locked = true, repeating = true })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. "brightness-down"), { locked = true, repeating = true })
 
-
-
 hl.config({
   general = {
     resize_on_border = false,
@@ -90,7 +86,7 @@ hl.config({
     border_size = 2,
   },
   decoration = {
-    rounding = 0, 
+    rounding = 0,
     rounding_power = 2,
     blur = {
       enabled = true,
@@ -148,18 +144,18 @@ end)
 -- Workspace Rules
 
 hl.workspace_rule({ workspace = "special:sysmon", on_created_empty = "kitty -e btop" })
-hl.workspace_rule({ workspace = "special:gaming"})
+hl.workspace_rule({ workspace = "special:gaming" })
 
 -- Window Rules
 
 hl.window_rule({
-  match       = { class = "(pinentry-)(.*)" },
+  match = { class = "(pinentry-)(.*)" },
   stay_focused = true,
 })
 hl.window_rule({
-    match = { class = "dev.noctalia.Noctalia" },
-    float = true,
-    size = { 1080, 920 },
+  match = { class = "dev.noctalia.Noctalia" },
+  float = true,
+  size = { 1080, 920 },
 })
 hl.window_rule({
   match = { class = "^(firefox)$" },
@@ -182,4 +178,4 @@ hl.window_rule({ match = { class = "^(com.danklinux.dms)$" }, float = true })
 hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
 hl.window_rule({ match = { class = "^(org.gnome.Calculator)$" }, float = true })
 hl.window_rule({ match = { class = "^(org.gnome.Nautilus)$" }, float = true })
-hl.window_rule({ match = { class = ".*"}, idle_inhibit = "fullscreen"})
+hl.window_rule({ match = { class = ".*" }, idle_inhibit = "fullscreen" })

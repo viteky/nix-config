@@ -22,8 +22,8 @@
         };
         fonts = {
           monospace = {
-            package = pkgs.nerd-fonts.monaspace;
-            name = "MonaspiceNe Nerd Font";
+            package = pkgs.monaspace;
+            name = "Monaspace Neon NF";
           };
         };
 
@@ -35,27 +35,41 @@
       stylix = {
         enable = true;
         autoEnable = false;
+
         icons = {
           enable = true;
           package = pkgs.papirus-icon-theme;
           dark = "Papirus-Dark";
           light = "Papirus-Light";
         };
-        targets.gtk.extraCss = ''
-          .dialog-action-area > .text-button {
-            color: @dialog_fg_color;
-          }
-        '';
-        targets.gtk.enable = true;
-        targets.fontconfig.enable = true;
-        targets.hyprland.enable = true;
-        targets.kitty = {
-          enable = true;
-          colors.enable = false;
-        };
-        targets.vscode = {
-          enable = true;
-          colors.enable = false;
+
+        targets = {
+          fontconfig.enable = true;
+          hyprland.enable = true;
+
+          gtk = {
+            enable = true;
+            extraCss = ''
+              .dialog-action-area > .text-button {
+                color: @dialog_fg_color;
+              }
+            '';
+          };
+
+          kitty = {
+            enable = true;
+            colors.enable = false;
+          };
+
+          ghostty = {
+            enable = true;
+            colors.enable = false;
+          };
+
+          vscode = {
+            enable = true;
+            colors.enable = false;
+          };
         };
       };
     };
