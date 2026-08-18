@@ -65,10 +65,10 @@ position = "bottom_center"
     media = false
 
 [plugin_settings."avivbintangaringga/nix-monitor"]
-clean_command = "nix-collect-garbage -d >/dev/null 2>&1 &"
+clean_command = "nix-collect-garbage -d"
 close_on_enter = false
-optimize_command = "nix-store --optimise -vv >/dev/null 2>&1 &"
-update_command = "nh os switch -u > /tmp/nixos-update.log 2>&1 &"
+optimize_command = "nix-store --optimise -vv"
+update_command = "nh os switch -u > /tmp/nixos-update.log"
 
 [plugin_settings."kenn/keybind-cheatsheet"]
 show_actions = true
