@@ -4,10 +4,12 @@
       programs.ghostty = {
         enable = true;
         settings = {
-          font-feature = "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'ss10', 'liga'";
+          font-feature = "'calt', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'ss09', 'ss10', 'liga', 'cv01' 2, 'cv31' 1";
+          font-style = "Medium";
           gtk-tabs-location = "bottom";
           confirm-close-surface = false;
           adjust-cursor-thickness = 2;
+          gtk-wide-tabs = false;
         };
       };
     };
