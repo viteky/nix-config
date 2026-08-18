@@ -9,6 +9,7 @@
       catppuccin
       tui
       development
+      development.docker
       virtualisation
       gaming
       editors.vscode
