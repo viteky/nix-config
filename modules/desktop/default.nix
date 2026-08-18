@@ -3,6 +3,7 @@
     nixos = {pkgs, ...}: {
       programs.dconf.enable = true;
       programs.seahorse.enable = true;
+      programs.nm-applet.enable = true;
       fonts.fontconfig.enable = true;
       hardware.bluetooth.enable = true;
       security = {
