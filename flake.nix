@@ -1,12 +1,7 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
   outputs = inputs: inputs.flake-parts.lib.mkFlake {inherit inputs;} (inputs.import-tree ./modules);
-
-  nixConfig = {
-    extra-substituters = ["https://noctalia.cachix.org"];
-    extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
-  };
 
   inputs = {
     catppuccin.url = "github:catppuccin/nix";
@@ -20,10 +15,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    import-tree.url = "github:vic/import-tree";
+    import-tree.url = "github:denful/import-tree";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.1.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    noctalia.url = "github:noctalia-dev/noctalia/cachix";
-    noctalia-greeter.url = "github:noctalia-dev/noctalia-greeter";
     nur = {
       url = "github:nix-community/nur";
       inputs.nixpkgs.follows = "nixpkgs";

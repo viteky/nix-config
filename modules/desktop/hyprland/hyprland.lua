@@ -1,5 +1,4 @@
 -- Layer Rules
-hl.layer_rule({ match = { namespace = "dms" }, no_anim = true })
 hl.layer_rule({
   name = "noctalia",
   match = {
@@ -15,19 +14,8 @@ hl.layer_rule({
 local mod = "SUPER"
 
 -- Application Launchers
-hl.bind(mod .. " + space", hl.dsp.exec_cmd("dms ipc call spotlight toggle"))
-hl.bind(mod .. " + V", hl.dsp.exec_cmd("dms ipc call clipboard toggle"))
-hl.bind(mod .. " + M", hl.dsp.exec_cmd("dms ipc call processlist focusOrToggle"))
-hl.bind(mod .. " + comma", hl.dsp.exec_cmd("dms ipc call settings focusOrToggle"))
-hl.bind(mod .. " + N", hl.dsp.exec_cmd("dms ipc call notifications toggle"))
-hl.bind(mod .. " + Y", hl.dsp.exec_cmd("dms ipc call dankdash wallpaper"))
-hl.bind(mod .. " + TAB", hl.dsp.exec_cmd("dms ipc call hypr toggleOverview"))
-hl.bind(mod .. " + A", hl.dsp.exec_cmd("dms ipc call plugins toggle aiAssistant"))
-hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("ghostty"))
-hl.bind(mod .. " + E", hl.dsp.exec_cmd("nautilus"))
-
--- Security
-hl.bind(mod .. " + ALT + L", hl.dsp.exec_cmd("dms ipc call lock lock"))
+hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("uwsm app -- ghostty +new-window"))
+hl.bind(mod .. " + E", hl.dsp.exec_cmd("uwsm app -- nautilus"))
 
 -- Audio Controls
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("dms ipc call audio increment 3"), { locked = true, repeating = true })
@@ -39,11 +27,11 @@ hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("dms ipc call spotlight toggle"),
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("dms ipc call spotlight toggle"), { locked = true, repeating = true })
 
 hl.bind(mod .. "+ mouse:272", hl.dsp.window.drag(), { mouse = true, drag = true })
-hl.bind(mod .. "+ mouse:272", hl.dsp.window.float(), { mouse = true, click = true })
 hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 hl.bind(mod .. "+Q", hl.dsp.window.close())
 hl.bind(mod .. "+F", hl.dsp.window.fullscreen())
+hl.bind(mod .. "+T", hl.dsp.window.float())
 
 local directions = { left = "l", right = "r", up = "u", down = "d" }
 for key, direction in pairs(directions) do
@@ -61,6 +49,13 @@ end
 hl.bind(mod .. "+ESCAPE", hl.dsp.workspace.toggle_special("sysmon"))
 hl.bind(mod .. "+G", hl.dsp.workspace.toggle_special("gaming"))
 
+hl.bind("CTRL + GRAVE", hl.dsp.global("com.mitchellh.ghostty:CTRL+grave"))
+hl.layer_rule({ match = { namespace = "ghostty-quick-terminal" }, animation = "slidevert", blur = true })
+
+---
+--- Noctalia binds
+---
+
 local ipc = "noctalia msg "
 
 -- Core binds
@@ -68,6 +63,7 @@ hl.bind(mod .. "+Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mod .. "+S", hl.dsp.exec_cmd(ipc .. "panel-toggle control-center"))
 hl.bind(mod .. "+comma", hl.dsp.exec_cmd(ipc .. "settings-toggle"))
 hl.bind("ALT + Tab", hl.dsp.exec_cmd(ipc .. "window-switcher"))
+hl.bind(mod .. "+L", hl.dsp.exec_cmd(ipc .. "session lock"))
 
 -- Media keys
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"), { locked = true, repeating = true })
@@ -116,7 +112,7 @@ hl.config({
     no_donation_nag = true,
   },
   xwayland = {
-    force_zero_scaling = false,
+    force_zero_scaling = true,
   },
 })
 
@@ -174,9 +170,7 @@ hl.window_rule({
   workspace = 5,
 })
 
-hl.window_rule({ match = { class = "^(com.danklinux.dms)$" }, float = true })
 hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
-hl.window_rule({ match = { class = "^(org.gnome.Calculator)$" }, float = true })
-hl.window_rule({ match = { class = "^(org.gnome.Nautilus)$" }, float = true })
+hl.window_rule({ match = { class = "^(org.gnome.*)$" }, float = true })
 hl.window_rule({ match = { class = "nm-connection-editor" }, float = true })
 hl.window_rule({ match = { class = ".*" }, idle_inhibit = "fullscreen" })

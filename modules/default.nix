@@ -23,7 +23,7 @@
       nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
       nix = {
         settings = {
-          experimental-features = "nix-command flakes";
+          experimental-features = ["nix-command" "flakes"];
           auto-optimise-store = true;
 
           substituters = [
@@ -39,14 +39,16 @@
         };
       };
 
+      i18n.defaultLocale = "en_AU.UTF-8";
+
       environment.systemPackages = with pkgs; [
-        sbctl
         wget
         unzip
         sops
         # inputs.self.packages.${stdenv.hostPlatform.system}.nvf
         gcc
         gnumake
+        gparted
       ];
 
       programs = {

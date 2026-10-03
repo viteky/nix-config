@@ -1,40 +1,26 @@
-{inputs, ...}: {
-  flake-file.inputs = {
-    noctalia = {
-      url = "github:noctalia-dev/noctalia/cachix";
-    };
-
-    noctalia-greeter = {
-      url = "github:noctalia-dev/noctalia-greeter";
-    };
-  };
-
-  flake-file.nixConfig = {
-    extra-substituters = ["https://noctalia.cachix.org"];
-    extra-trusted-public-keys = ["noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="];
-  };
-
+{
   den.aspects.desktop.noctalia = {
     nixos = {pkgs, ...}: {
-      imports = [
-        inputs.noctalia-greeter.nixosModules.default
-        inputs.noctalia.nixosModules.default
-      ];
-      programs.noctalia.enable = true;
-      programs.noctalia.recommendedServices.enable = true;
-      programs.noctalia-greeter.enable = true;
-      programs.noctalia-greeter.settings = {
-        cursor = {
-          theme = "Bibata-Modern-Ice";
-          size = 20;
-          path = "${pkgs.bibata-cursors}/share/icons";
+      programs.noctalia = {
+        enable = true;
+        recommendedServices.enable = true;
+      };
+
+      services.displayManager.noctalia-greeter = {
+        enable = true;
+        passwordlessSyncUsers = ["jaydenv"];
+        cursorTheme = {
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
         };
-        output.name = "DP-2";
-        idle.timeout = 300;
+        settings = {
+          output.name = "DP-2";
+          idle.timeout = 300;
+        };
       };
     };
-    homeManager = {pkgs, ...}: {
-      imports = [inputs.noctalia.homeModules.default];
+
+    homeManager = {
       programs.noctalia = {
         enable = true;
         systemd.enable = true;

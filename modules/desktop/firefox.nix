@@ -27,6 +27,7 @@
             "sidebar.verticalTabs" = true;
             "sidebar.revamp" = true;
             "extensions.autoDisableScopes" = 0;
+            "dom.events.testing.asyncClipboard" = true;
           };
 
           extensions = {

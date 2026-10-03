@@ -9,8 +9,10 @@
       enable32Bit = true;
     };
 
-    services.avahi.enable = true;
-    services.openssh.enable = true;
+    services = {
+      avahi.enable = true;
+      openssh.enable = true;
+    };
 
     programs.nix-ld.enable = true;
 
@@ -18,30 +20,20 @@
       nameservers = ["1.1.1.1" "1.0.0.1"];
       networkmanager = {
         enable = true;
-        # dns = "systemd-resolved";
         plugins = with pkgs; [
-          networkmanager-fortisslvpn
           networkmanager-openvpn
           networkmanager-openconnect
         ];
       };
     };
 
-    # services.resolved.enable = true;
-
     environment.sessionVariables.NIXOS_OZONE_WL = 1;
 
     boot = {
-      # consoleLogLevel = 3;
-      initrd.verbose = false;
       plymouth.enable = true;
       supportedFilesystems = ["ntfs"];
-      kernelParams = ["quiet"];
-      loader.limine = {
-        enable = true;
-        secureBoot.enable = true;
-        style.interface.helpHidden = true;
-      };
+      loader.systemd-boot.enable = true;
+      loader.systemd-boot.consoleMode = "max";
     };
   };
 }

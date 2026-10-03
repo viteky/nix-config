@@ -1,9 +1,11 @@
 [bar.default]
 capsule = true
 center = [ "notifications", "clock", "weather" ]
+concave_edge_corners = false
 end = [ "media", "tray", "group:g1" ]
-margin_edge = 5
-margin_ends = 5
+margin_edge = 0
+margin_ends = 0
+radius = 0
 start = [ "launcher", "workspaces", "active_window", "nix-monitor" ]
 
     [[bar.default.capsule_group]]
@@ -24,13 +26,16 @@ enabled = true
 
 [config]
 
+[control_center]
+width = 800
+
 [dock]
 active_monitor_only = true
 auto_hide = true
 enabled = true
 icon_size = 32
 launcher_position = "start"
-pinned = [ "firefox", "kitty", "code" ]
+pinned = [ "firefox", "com.mitchellh.ghostty", "code" ]
 reserve_space = false
 show_dots = true
 
@@ -55,6 +60,70 @@ behavior_order = [ "lock", "screen-off", "lock-and-suspend" ]
 [location]
 auto_locate = true
 
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@DP-1" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-1"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 1024.0
+    cy = 970.0
+    output = "DP-1"
+    placement_height = 1152.0
+    placement_width = 2048.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 196.0
+    box_width = 810.0
+    cx = 960.0
+    cy = 898.0
+    output = "DP-2"
+    placement_height = 1080.0
+    placement_width = 1920.0
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        center_password_text = false
+        input_opacity = 1.0
+        input_radius = 6.0
+        layout = "regular"
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+        show_media = true
+        show_session_buttons = true
+        show_unlock_hint = true
+        show_weather = true
+
 [nightlight]
 enabled = true
 
@@ -74,16 +143,11 @@ update_command = "nh os switch -u > /tmp/nixos-update.log"
 show_actions = true
 
 [plugins]
-enabled = [
-    "noctalia/bitwarden",
-    "kenn/keybind-cheatsheet",
-    "icefish/phone-connect",
-    "avivbintangaringga/nix-monitor",
-]
+enabled = [ "noctalia/bitwarden", "kenn/keybind-cheatsheet", "icefish/phone-connect", "avivbintangaringga/nix-monitor" ]
 
 [shell]
 avatar_path = "/var/lib/AccountsService/icons/jaydenv"
-font_family = "Monaspace Neon"
+font_family = "JetBrainsMono Nerd Font"
 launch_apps_custom_command = "uwsm app -- $CMD"
 polkit_agent = true
 settings_show_advanced = false
@@ -108,8 +172,21 @@ time_format = "{:%I:%M %p}"
 [theme]
 builtin = "Catppuccin"
 community_palette = "Catppuccin Macchiato Blue"
+mode = "dark"
 source = "community"
 wallpaper_scheme = "m3-content"
+
+[wallpaper.default]
+path = "/home/jaydenv/Pictures/Wallpapers/catppuccin-wallpapers/landscapes/yosemite.png"
+
+[wallpaper.last]
+path = "/home/jaydenv/Pictures/Wallpapers/catppuccin-wallpapers/landscapes/yosemite.png"
+
+[wallpaper.monitors.DP-1]
+path = "/home/jaydenv/Pictures/Wallpapers/catppuccin-wallpapers/landscapes/yosemite.png"
+
+[wallpaper.monitors.DP-2]
+path = "/home/jaydenv/Pictures/Wallpapers/catppuccin-wallpapers/landscapes/yosemite.png"
 
 [widget.active_window]
 interactive = false

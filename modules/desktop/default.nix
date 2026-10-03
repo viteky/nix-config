@@ -1,9 +1,13 @@
 {
   den.aspects.desktop = {
     nixos = {pkgs, ...}: {
-      programs.dconf.enable = true;
-      programs.seahorse.enable = true;
-      programs.nm-applet.enable = true;
+      programs = {
+        dconf.enable = true;
+        seahorse.enable = true;
+        nm-applet.enable = true;
+        kdeconnect.enable = true;
+      };
+
       fonts.fontconfig.enable = true;
       hardware.bluetooth.enable = true;
       security = {
@@ -25,10 +29,16 @@
       };
 
       environment.systemPackages = with pkgs; [
-        libreoffice-fresh
+        libreoffice
         hunspell
         hunspellDicts.en_AU
-        x2goclient
+        (x2goclient.overrideAttrs (oldAttrs: {
+          postInstall =
+            (oldAttrs.postInstall or "")
+            + ''
+              wrapProgram $out/bin/x2goclient --set QT_QPA_PLATFORM xcb
+            '';
+        }))
         kdePackages.kdenlive
         gnome-calculator
         gimp
@@ -39,6 +49,7 @@
     homeManager = {
       programs.mpv.enable = true;
       fonts.fontconfig.enable = true;
+      services.kdeconnect.enable = true;
     };
   };
 }

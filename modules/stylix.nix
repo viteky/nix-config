@@ -22,8 +22,8 @@
         };
         fonts = {
           monospace = {
-            package = pkgs.monaspace;
-            name = "Monaspace Neon NF";
+            package = pkgs.nerd-fonts.jetbrains-mono;
+            name = "JetBrainsMono Nerd Font Mono";
           };
         };
 

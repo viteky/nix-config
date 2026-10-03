@@ -1,10 +1,12 @@
 {
   den.aspects.desktop = {
-    nixos = {
+    nixos = {pkgs, ...}: {
       programs.hyprland = {
         enable = true;
         withUWSM = true;
       };
+
+      xdg.portal.extraPortals = with pkgs; [xdg-desktop-portal-gtk];
     };
 
     homeManager = {
@@ -17,26 +19,20 @@
         package = null;
         portalPackage = null;
         configType = "lua";
-        systemd.variables = ["--all"];
-        systemd.enableXdgAutostart = true;
-        systemd.enable = false;
-        extraLuaFiles = {
-          "config.lua" = {
-            content = ./config.lua;
-            autoLoad = true;
-          };
+
+        systemd = {
+          variables = ["--all"];
+          enableXdgAutostart = true;
+          enable = false;
         };
+
+        extraConfig = ''
+          require("extra")
+        '';
       };
 
       xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
-
-      xdg.portal = {
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-wlr
-        ];
-        # config.common.default = "*";
-      };
+      xdg.configFile."hypr/extra.lua".source = config.lib.file.mkOutOfStoreSymlink "/home/jaydenv/Projects/my-nix/modules/desktop/hyprland/hyprland.lua";
 
       home.packages = with pkgs; [
         wl-clipboard

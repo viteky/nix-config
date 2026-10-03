@@ -5,12 +5,17 @@
         enable = true;
         settings = {
           confirm_os_window_close = 0;
+          remember_window_size = "no";
           resize_in_steps = "yes";
           allow_remote_control = "yes";
           listen_on = "unix:/tmp/kitty";
           term = "xterm-256color";
-          font_features = "MonaspaceNeonNF-Regular +calt +liga";
-          disable_ligatures = "cursor";
+
+          tab_bar_min_tabs = 1;
+          tab_bar_edge = "bottom";
+          tab_bar_style = "powerline";
+          tab_powerline_style = "slanted";
+          tab_title_template = "{title}{' :{}:'.format(num_windows) if num_windows > 1 else ''}";
         };
       };
     };
