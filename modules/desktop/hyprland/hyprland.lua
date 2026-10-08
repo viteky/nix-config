@@ -49,9 +49,6 @@ end
 hl.bind(mod .. "+ESCAPE", hl.dsp.workspace.toggle_special("sysmon"))
 hl.bind(mod .. "+G", hl.dsp.workspace.toggle_special("gaming"))
 
-hl.bind("CTRL + GRAVE", hl.dsp.global("com.mitchellh.ghostty:CTRL+grave"))
-hl.layer_rule({ match = { namespace = "ghostty-quick-terminal" }, animation = "slidevert", blur = true })
-
 ---
 --- Noctalia binds
 ---
@@ -127,6 +124,13 @@ hl.monitor({
 hl.monitor({
   output = "desc:ASUSTek COMPUTER INC VG27A LBLMQS262134",
   mode = "2560x1440@165.00",
+  position = "0x0",
+  scale = 1.25,
+})
+
+hl.monitor({
+  output = "eDP-1",
+  mode = "1920x1080@60.00",
   position = "0x0",
   scale = 1.25,
 })

@@ -12,6 +12,8 @@
     services = {
       avahi.enable = true;
       openssh.enable = true;
+      automatic-timezoned.enable = true;
+      geoclue2.enable = true;
     };
 
     programs.nix-ld.enable = true;
