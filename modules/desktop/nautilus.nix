@@ -34,7 +34,7 @@
     };
 
     homeManager = {user, ...}: {
-      services.udiskie.enable = true;
+      # services.udiskie.enable = true;
       gtk.gtk3.bookmarks = [
         "file:///home/${user.name}/Documents"
         "file:///home/${user.name}/Downloads"

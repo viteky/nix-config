@@ -10,7 +10,13 @@
   }: {
     imports = [(modulesPath + "/installer/scan/not-detected.nix")];
     boot = {
-      initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "sd_mod"];
+      initrd.availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usbhid"
+        "sd_mod"
+      ];
       initrd.kernelModules = [];
       kernelModules = ["kvm-amd"];
       extraModulePackages = [];
@@ -25,7 +31,10 @@
       "/boot" = {
         device = "/dev/disk/by-uuid/7CF1-738B";
         fsType = "vfat";
-        options = ["fmask=0077" "dmask=0077"];
+        options = [
+          "fmask=0077"
+          "dmask=0077"
+        ];
       };
 
       "/home/jaydenv/Games" = {
@@ -44,7 +53,6 @@
     networking.useDHCP = lib.mkDefault true;
 
     nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-    hardware.cpu.amd.updateMicrocode =
-      lib.mkDefault config.hardware.enableRedistributableFirmware;
+    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 }

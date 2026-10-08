@@ -13,7 +13,7 @@
         enable = true;
         autoEnable = false;
         base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-        image = ../wallpapers/keyboards.jpg;
+        image = ../wallpapers/yosemite.png;
         polarity = "dark";
         cursor = {
           package = pkgs.bibata-cursors;
@@ -28,6 +28,7 @@
         };
 
         targets.fontconfig.enable = true;
+        targets.qt.enable = true;
       };
     };
 
@@ -46,6 +47,9 @@
         targets = {
           fontconfig.enable = true;
           hyprland.enable = true;
+          noctalia.enable = true;
+          qt.enable = true;
+          kde.enable = true;
 
           gtk = {
             enable = true;

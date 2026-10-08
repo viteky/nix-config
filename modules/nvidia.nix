@@ -1,6 +1,12 @@
 {den, ...}: {
   den.aspects.nvidia = {
-    includes = [(den.batteries.unfree ["nvidia-x11" "nvidia-settings" "nvidia-kernel-modules"])];
+    includes = [
+      (den.batteries.unfree [
+        "nvidia-x11"
+        "nvidia-settings"
+        "nvidia-kernel-modules"
+      ])
+    ];
     nixos = {config, ...}: {
       services.xserver.videoDrivers = ["nvidia"];
 

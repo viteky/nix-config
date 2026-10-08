@@ -13,7 +13,13 @@
       package = pkgs.nextcloud34;
       extraAppsEnable = true;
       extraApps = {
-        inherit (config.services.nextcloud.package.packages.apps) news contacts calendar tasks;
+        inherit
+          (config.services.nextcloud.package.packages.apps)
+          news
+          contacts
+          calendar
+          tasks
+          ;
       };
       settings = {
         trusted_domains = ["nextcloud.viteky.net"];

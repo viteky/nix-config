@@ -36,12 +36,18 @@
       keymap.mgr.prepend_keymap = [
         {
           on = "y";
-          run = ["yank" "plugin clipboard -- --action=copy"];
+          run = [
+            "yank"
+            "plugin clipboard -- --action=copy"
+          ];
           desc = "Yank selected files (copy)";
         }
         {
           on = "x";
-          run = ["yank --cut" "plugin clipboard -- --action=copy"];
+          run = [
+            "yank --cut"
+            "plugin clipboard -- --action=copy"
+          ];
           desc = "Yank selected files (cut)";
         }
         {

@@ -8,6 +8,7 @@
       starship = {
         enable = true;
         enableTransience = true;
+        presets = ["nerd-font-symbols" "bracketed-segments"];
         settings = lib.mkMerge [
           {
             scala = {

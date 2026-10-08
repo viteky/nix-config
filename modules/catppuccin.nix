@@ -3,7 +3,10 @@
     catppuccin.url = "github:catppuccin/nix";
   };
 
-  den.aspects.catppuccin = {
+  den.aspects.catppuccin = let
+    flavor = "macchiato";
+    accent = "blue";
+  in {
     nixos = {
       imports = [
         inputs.catppuccin.nixosModules.catppuccin
@@ -11,11 +14,10 @@
 
       catppuccin = {
         enable = true;
-        autoEnable = true;
-        flavor = "macchiato";
-        accent = "blue";
+        inherit flavor accent;
         cache.enable = true;
         gtk.icon.enable = false;
+        plymouth.enable = false;
       };
     };
 
@@ -26,9 +28,7 @@
 
       catppuccin = {
         enable = true;
-        autoEnable = true;
-        flavor = "macchiato";
-        accent = "blue";
+        inherit flavor accent;
         gtk.icon.enable = false;
         firefox.force = true;
         thunderbird.profile = "default";

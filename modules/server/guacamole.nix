@@ -130,7 +130,10 @@
         enable = true;
         requires = ["postgresql.service"];
         after = ["postgresql.service"];
-        wantedBy = ["tomcat.service" "multi-user.target"];
+        wantedBy = [
+          "tomcat.service"
+          "multi-user.target"
+        ];
         script = ''
           echo "[guacamole-bootstrapper] Info: checking if database '${app}' exists but is empty..."
           output=$(${psql} -U ${app} -c "\dt" 2>&1)

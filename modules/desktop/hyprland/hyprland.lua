@@ -14,7 +14,7 @@ hl.layer_rule({
 local mod = "SUPER"
 
 -- Application Launchers
-hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("uwsm app -- ghostty +new-window"))
+hl.bind(mod .. " + RETURN", hl.dsp.exec_cmd("uwsm app -- kitty"))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd("uwsm app -- nautilus"))
 
 -- Audio Controls
@@ -171,6 +171,6 @@ hl.window_rule({
 })
 
 hl.window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
+hl.window_rule({ match = { title = "^(*scrcpy*)$" }, float = true })
 hl.window_rule({ match = { class = "^(org.gnome.*)$" }, float = true })
 hl.window_rule({ match = { class = "nm-connection-editor" }, float = true })
-hl.window_rule({ match = { class = ".*" }, idle_inhibit = "fullscreen" })

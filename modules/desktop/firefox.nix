@@ -53,13 +53,21 @@
             force = true;
             engines = {
               "NixOS Packages" = {
-                urls = [{template = "https://search.nixos.org/packages?channel=unstable&type=packages&query={searchTerms}";}];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/packages?channel=unstable&type=packages&query={searchTerms}";
+                  }
+                ];
                 icon = nixos-icon;
                 definedAliases = ["@np"];
               };
 
               "NixOS Options" = {
-                urls = [{template = "https://search.nixos.org/options?channel=unstable&type=packages&query={searchTerms}";}];
+                urls = [
+                  {
+                    template = "https://search.nixos.org/options?channel=unstable&type=packages&query={searchTerms}";
+                  }
+                ];
                 icon = nixos-icon;
                 definedAliases = ["@no"];
               };
@@ -71,7 +79,9 @@
               };
 
               "Home Manager Options" = {
-                urls = [{template = "https://home-manager-options.extranix.com/?query={searchTerms}&release=master";}];
+                urls = [
+                  {template = "https://home-manager-options.extranix.com/?query={searchTerms}&release=master";}
+                ];
                 icon = nixos-icon;
                 definedAliases = ["@hm"];
               };

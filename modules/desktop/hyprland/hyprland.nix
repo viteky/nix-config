@@ -32,7 +32,8 @@
       };
 
       xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
-      xdg.configFile."hypr/extra.lua".source = config.lib.file.mkOutOfStoreSymlink "/home/jaydenv/Projects/my-nix/modules/desktop/hyprland/hyprland.lua";
+      xdg.configFile."hypr/extra.lua".source =
+        config.lib.file.mkOutOfStoreSymlink "/home/jaydenv/Projects/my-nix/modules/desktop/hyprland/hyprland.lua";
 
       home.packages = with pkgs; [
         wl-clipboard

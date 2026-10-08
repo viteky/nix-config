@@ -20,7 +20,9 @@ in {
         "uucp"
         "dialout"
       ];
-      openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+6jdJqzBry0v40WsCAI+9ahVDzgZFlMzlfi3bFys8l jaydenv@desktop"];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+6jdJqzBry0v40WsCAI+9ahVDzgZFlMzlfi3bFys8l jaydenv@desktop"
+      ];
     };
 
     homeManager = {

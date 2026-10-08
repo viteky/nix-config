@@ -3,6 +3,10 @@
     vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
     };
+
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+    };
   };
 
   den.aspects.editors.vscode = {
@@ -13,6 +17,8 @@
       ...
     }: {
       nixpkgs.overlays = [inputs.vscode-extensions.overlays.default];
+      imports = [inputs.vscode-server.homeModules.default];
+      services.vscode-server.enable = true;
       programs.vscode = {
         enable = true;
         # package = pkgs.vscode-fhs;
@@ -21,7 +27,6 @@
           extensions = with pkgs.vscode-marketplace; [
             mkhl.direnv
             ms-vscode.live-server
-            # vscodevim.vim
             github.copilot-chat
             jnoortheen.nix-ide
             datakurre.devenv

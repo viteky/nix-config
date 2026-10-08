@@ -17,7 +17,7 @@
     };
     import-tree.url = "github:denful/import-tree";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v1.1.0";
+      url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -32,5 +32,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
   };
 }

@@ -36,7 +36,11 @@
         lutris = {
           enable = false;
           defaultWinePackage = pkgs.proton-ge-bin;
-          extraPackages = with pkgs; [gamescope mangohud gamemode];
+          extraPackages = with pkgs; [
+            gamescope
+            mangohud
+            gamemode
+          ];
           protonPackages = with pkgs; [proton-ge-bin];
           steamPackage = osConfig.programs.steam.package;
         };

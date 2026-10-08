@@ -29,9 +29,19 @@
       };
 
       environment.systemPackages = with pkgs; [
+        glib
+        sshfs
+        android-tools
+        scrcpy
         libreoffice
         hunspell
         hunspellDicts.en_AU
+        kdePackages.kdenlive
+        gnome-calculator
+        gimp
+        bitwarden-cli
+        zenity
+
         (x2goclient.overrideAttrs (oldAttrs: {
           postInstall =
             (oldAttrs.postInstall or "")
@@ -39,10 +49,6 @@
               wrapProgram $out/bin/x2goclient --set QT_QPA_PLATFORM xcb
             '';
         }))
-        kdePackages.kdenlive
-        gnome-calculator
-        gimp
-        bitwarden-cli
       ];
     };
 
